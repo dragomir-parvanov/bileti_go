@@ -22,57 +22,33 @@ func ParsePermittedForFellingHTML(htmlResult io.Reader) ParsedResult {
 		log.Fatal(err)
 	}
 
-	id := _ExtractId(doc)
-	directiveNumber := _ExtractDirectiveNumber(doc)
-	permittedFor := _ExtractPermittedFor(doc)
-	typeOfFelling := _ExtractTypeOfFelling(doc)
-	section := _ExtractSection(doc)
-	subSection := _ExtractSubSection(doc)
-	municipality := _ExtractMunicipality(doc)
-	land := _ExtractLand(doc)
-	areaClearing := _ExtractAreaClearing(doc)
-	ownershipType := _ExtractOwnershipType(doc)
-	treesMarkedBy := _ExtractTreesMarkedBy(doc)
-	controlMark := _ExtractControlMarkNumber(doc)
-	controlMarkColor := _ExtractMarkColor(doc)
-	dateOfCarnetInventory := _ExtractDateOfCarnetInventory(doc)
-	expectedTreeExtraction := _ExtractExpectedTreeExtraction(doc)
-	additionalRequirements := _ExtractAdditionalRequirements(doc)
-	deadlineLogging := _ExtractDeadlineLogging(doc)
-	deadlineMaterialsUsage := _ExtractDeadlineMaterialsUsage(doc)
-	cleaningProcedure := _ExtractCleaningProcedure(doc)
-	removalFromTemporaryStorage := _ExtractRemovalFromTemporaryStorage(doc)
-	issuedBy := _ExtractIssuedBy(doc)
-	whoReceivedThePermit := _ExtractWhoReceivedThePermit(doc)
-	issuedOn := _ExtractIssuedOn(doc)
-	issuedByEmployee := _ExtractIssuedByEmployee(doc)
-	issuedCode := _ExtractIssuedCode(doc)
-
 	return ParsedResult{
-		id, directiveNumber,
-		permittedFor,
-		typeOfFelling,
-		section,
-		subSection,
-		municipality,
-		land,
-		areaClearing,
-		ownershipType,
-		treesMarkedBy,
-		controlMark,
-		controlMarkColor,
-		dateOfCarnetInventory,
-		expectedTreeExtraction,
-		additionalRequirements,
-		deadlineLogging,
-		deadlineMaterialsUsage,
-		cleaningProcedure,
-		removalFromTemporaryStorage,
-		issuedBy,
-		whoReceivedThePermit,
-		issuedOn,
-		issuedByEmployee,
-		issuedCode}
+		id:                        _ExtractId(doc),
+		directiveNumber:           _ExtractDirectiveNumber(doc),
+		permittedFor:              _ExtractPermittedFor(doc),
+		typeOfFelling:             _ExtractTypeOfFelling(doc),
+		section:                   _ExtractSection(doc),
+		subSection:                _ExtractSubSection(doc),
+		municipality:              _ExtractMunicipality(doc),
+		land:                      _ExtractLand(doc),
+		areaClearing:              _ExtractAreaClearing(doc),
+		ownershipType:             _ExtractOwnershipType(doc),
+		treesMarkedBy:             _ExtractTreesMarkedBy(doc),
+		controlMarkNumber:         _ExtractControlMarkNumber(doc),
+		controlMarkColor:          _ExtractMarkColor(doc),
+		dateOfCarnetInventory:     _ExtractDateOfCarnetInventory(doc),
+		expectedTreeExtraction:    _ExtractExpectedTreeExtraction(doc),
+		additionalRequirements:    _ExtractAdditionalRequirements(doc),
+		deadlineLogging:           _ExtractDeadlineLogging(doc),
+		deadlineMaterialsUsage:    _ExtractDeadlineMaterialsUsage(doc),
+		cleaningProcedure:         _ExtractCleaningProcedure(doc),
+		removalToTemporaryStorage: _ExtractRemovalFromTemporaryStorage(doc),
+		issuedBy:                  _ExtractIssuedBy(doc),
+		whoReceivedThePermit:      _ExtractWhoReceivedThePermit(doc),
+		issuedOn:                  _ExtractIssuedOn(doc),
+		issuedByEmployee:          _ExtractIssuedByEmployee(doc),
+		issuedCode:                _ExtractIssuedCode(doc),
+	}
 }
 
 func _CleanString(str string) string {
