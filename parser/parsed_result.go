@@ -35,6 +35,12 @@ type ParsedResult struct {
 	issuedByEmployee            string
 	issuedCode                  string
 	permitIssuePlace            PermitIssuePlace
+	extension                   Extension
+}
+
+type TreeExtractionCategory struct {
+	treeType string
+	value    float64
 }
 
 type PermitIssuePlace struct {
@@ -44,4 +50,10 @@ type PermitIssuePlace struct {
 	address        string
 	subSection     string
 	gpsCoordinates string
+}
+
+type Extension struct {
+	loggingTo        time.Time
+	materialsUsageTo time.Time
+	issuedBy         string
 }

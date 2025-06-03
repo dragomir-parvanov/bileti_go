@@ -481,3 +481,47 @@ func TestShouldReturnPermitIssueGpsCoordinates(t *testing.T) {
 		t.Errorf("Got %s, expected %s", result, expected)
 	}
 }
+
+func TestShouldReturnExtensionLoggingTo(t *testing.T) {
+	testFile := GetTestFile()
+
+	result := ParsePermittedForFellingHTML(testFile).extension.loggingTo
+
+	expected, err := time.Parse("02.01.2006", "27.02.2025")
+
+	if err != nil {
+		t.Errorf("Got %s, expected error", err)
+	}
+
+	if result != expected {
+		t.Errorf("Got %s, expected %s", result, expected)
+	}
+}
+
+func TestShouldReturnExtensionMaterialsUsageTo(t *testing.T) {
+	testFile := GetTestFile()
+
+	result := ParsePermittedForFellingHTML(testFile).extension.materialsUsageTo
+
+	expected, err := time.Parse("02.01.2006", "28.02.2025")
+
+	if err != nil {
+		t.Errorf("Got %s, expected error", err)
+	}
+
+	if result != expected {
+		t.Errorf("Got %s, expected %s", result, expected)
+	}
+}
+
+func TestShouldReturnExtensionIssuedBy(t *testing.T) {
+	testFile := GetTestFile()
+
+	result := ParsePermittedForFellingHTML(testFile).extension.issuedBy
+
+	expected := "Удължителен Човек"
+
+	if result != expected {
+		t.Errorf("Got %s, expected %s", result, expected)
+	}
+}
