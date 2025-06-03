@@ -8,10 +8,10 @@ import (
 	"time"
 )
 
-const TEST_FILE_NAME = "parse_bileti_test.html"
+const TestFileName = "parse_bileti_test.html"
 
 func GetTestFile() io.Reader {
-	file, err := os.Open(TEST_FILE_NAME)
+	file, err := os.Open(TestFileName)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -26,6 +26,18 @@ func TestShouldReturnId(t *testing.T) {
 	result := ParsePermittedForFellingHTML(testFile).id
 
 	expected := "0805138"
+
+	if result != expected {
+		t.Errorf("Got %s, expected %s", result, expected)
+	}
+}
+
+func TestShouldReturnRegionalForestryDirectorate(t *testing.T) {
+	testFile := GetTestFile()
+
+	result := ParsePermittedForFellingHTML(testFile).regionalForestryDirectorate
+
+	expected := "Бургас"
 
 	if result != expected {
 		t.Errorf("Got %s, expected %s", result, expected)
@@ -58,6 +70,19 @@ func TestShouldReturnPermittedFor(t *testing.T) {
 	}
 }
 
+func TestShouldReturnAllowedForester(t *testing.T) {
+
+	testFile := GetTestFile()
+
+	result := ParsePermittedForFellingHTML(testFile).allowedForester
+
+	expected := "Регистриран лесовъд"
+
+	if result != expected {
+		t.Errorf("Got %s, expected %s", result, expected)
+	}
+}
+
 func TestShouldReturnTypeOfFelling(t *testing.T) {
 
 	testFile := GetTestFile()
@@ -73,9 +98,9 @@ func TestShouldReturnTypeOfFelling(t *testing.T) {
 
 func TestShouldReturnSection(t *testing.T) {
 
-	test_file := GetTestFile()
+	testFile := GetTestFile()
 
-	result := ParsePermittedForFellingHTML(test_file).section
+	result := ParsePermittedForFellingHTML(testFile).section
 
 	expected := "450"
 
@@ -86,11 +111,24 @@ func TestShouldReturnSection(t *testing.T) {
 
 func TestShouldReturnSubSection(t *testing.T) {
 
-	test_file := GetTestFile()
+	testFile := GetTestFile()
 
-	result := ParsePermittedForFellingHTML(test_file).subSection
+	result := ParsePermittedForFellingHTML(testFile).subSection
 
 	expected := "1"
+
+	if result != expected {
+		t.Errorf("Got %s, expected %s", result, expected)
+	}
+}
+
+func TestShouldReturnCadastreId(t *testing.T) {
+
+	testFile := GetTestFile()
+
+	result := ParsePermittedForFellingHTML(testFile).cadastreId
+
+	expected := "тестов кадастрален номер"
 
 	if result != expected {
 		t.Errorf("Got %s, expected %s", result, expected)
@@ -152,7 +190,7 @@ func TestShouldReturnTreesMarkedBy(t *testing.T) {
 
 	result := ParsePermittedForFellingHTML(testFile).treesMarkedBy
 
-	expected := ""
+	expected := "Тестов Маркировач"
 
 	if result != expected {
 		t.Errorf("Got %s, expected %s", result, expected)
@@ -188,7 +226,7 @@ func TestShouldReturnDateOfCarnetInventory(t *testing.T) {
 
 	result := ParsePermittedForFellingHTML(testFile).dateOfCarnetInventory
 
-	expected := ""
+	expected := time.Time{}
 
 	if result != expected {
 		t.Errorf("Got %s, expected %s", result, expected)
@@ -289,7 +327,7 @@ func TestShouldReturnCleaningProcedure(t *testing.T) {
 
 	result := ParsePermittedForFellingHTML(testFile).cleaningProcedure
 
-	expected := ""
+	expected := "Тестово почистване"
 
 	if result != expected {
 		t.Errorf("Got %s, expected %s", result, expected)
@@ -313,7 +351,7 @@ func TestShouldReturnIssuedBy(t *testing.T) {
 
 	result := ParsePermittedForFellingHTML(testFile).issuedBy
 
-	expected := ""
+	expected := "Издал човек"
 
 	if result != expected {
 		t.Errorf("Got %s, expected %s", result, expected)
@@ -325,7 +363,7 @@ func TestShouldReturnWhoReceivedThePermit(t *testing.T) {
 
 	result := ParsePermittedForFellingHTML(testFile).whoReceivedThePermit
 
-	expected := ""
+	expected := "Получил човек"
 
 	if result != expected {
 		t.Errorf("Got %s, expected %s", result, expected)
@@ -353,7 +391,7 @@ func TestShouldReturnIssuedByEmployee(t *testing.T) {
 
 	result := ParsePermittedForFellingHTML(testFile).issuedByEmployee
 
-	expected := ""
+	expected := "Служител"
 
 	if result != expected {
 		t.Errorf("Got %s, expected %s", result, expected)
@@ -365,7 +403,79 @@ func TestShouldReturnIssuedCode(t *testing.T) {
 
 	result := ParsePermittedForFellingHTML(testFile).issuedCode
 
-	expected := ""
+	expected := "Някакъв код"
+
+	if result != expected {
+		t.Errorf("Got %s, expected %s", result, expected)
+	}
+}
+
+func TestShouldReturnPermitIssueRegion(t *testing.T) {
+	testFile := GetTestFile()
+
+	result := ParsePermittedForFellingHTML(testFile).permitIssuePlace.region
+
+	expected := "Бургас"
+
+	if result != expected {
+		t.Errorf("Got %s, expected %s", result, expected)
+	}
+}
+
+func TestShouldReturnPermitIssueMunicipality(t *testing.T) {
+	testFile := GetTestFile()
+
+	result := ParsePermittedForFellingHTML(testFile).permitIssuePlace.municipality
+
+	expected := "Айтос"
+
+	if result != expected {
+		t.Errorf("Got %s, expected %s", result, expected)
+	}
+}
+
+func TestShouldReturnPermitIssueLand(t *testing.T) {
+	testFile := GetTestFile()
+
+	result := ParsePermittedForFellingHTML(testFile).permitIssuePlace.land
+
+	expected := "Айтос"
+
+	if result != expected {
+		t.Errorf("Got %s, expected %s", result, expected)
+	}
+}
+
+func TestShouldReturnPermitIssueAddress(t *testing.T) {
+	testFile := GetTestFile()
+
+	result := ParsePermittedForFellingHTML(testFile).permitIssuePlace.address
+
+	expected := "Някакъв адрес"
+
+	if result != expected {
+		t.Errorf("Got %s, expected %s", result, expected)
+	}
+}
+
+func TestShouldReturnPermitIssueSubsection(t *testing.T) {
+	testFile := GetTestFile()
+
+	result := ParsePermittedForFellingHTML(testFile).permitIssuePlace.subSection
+
+	expected := "Някакъв подотдел"
+
+	if result != expected {
+		t.Errorf("Got %s, expected %s", result, expected)
+	}
+}
+
+func TestShouldReturnPermitIssueGpsCoordinates(t *testing.T) {
+	testFile := GetTestFile()
+
+	result := ParsePermittedForFellingHTML(testFile).permitIssuePlace.gpsCoordinates
+
+	expected := "Някакви кординати"
 
 	if result != expected {
 		t.Errorf("Got %s, expected %s", result, expected)

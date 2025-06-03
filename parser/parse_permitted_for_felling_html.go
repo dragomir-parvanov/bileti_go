@@ -23,31 +23,35 @@ func ParsePermittedForFellingHTML(htmlResult io.Reader) ParsedResult {
 	}
 
 	return ParsedResult{
-		id:                        _ExtractId(doc),
-		directiveNumber:           _ExtractDirectiveNumber(doc),
-		permittedFor:              _ExtractPermittedFor(doc),
-		typeOfFelling:             _ExtractTypeOfFelling(doc),
-		section:                   _ExtractSection(doc),
-		subSection:                _ExtractSubSection(doc),
-		municipality:              _ExtractMunicipality(doc),
-		land:                      _ExtractLand(doc),
-		areaClearing:              _ExtractAreaClearing(doc),
-		ownershipType:             _ExtractOwnershipType(doc),
-		treesMarkedBy:             _ExtractTreesMarkedBy(doc),
-		controlMarkNumber:         _ExtractControlMarkNumber(doc),
-		controlMarkColor:          _ExtractMarkColor(doc),
-		dateOfCarnetInventory:     _ExtractDateOfCarnetInventory(doc),
-		expectedTreeExtraction:    _ExtractExpectedTreeExtraction(doc),
-		additionalRequirements:    _ExtractAdditionalRequirements(doc),
-		deadlineLogging:           _ExtractDeadlineLogging(doc),
-		deadlineMaterialsUsage:    _ExtractDeadlineMaterialsUsage(doc),
-		cleaningProcedure:         _ExtractCleaningProcedure(doc),
-		removalToTemporaryStorage: _ExtractRemovalFromTemporaryStorage(doc),
-		issuedBy:                  _ExtractIssuedBy(doc),
-		whoReceivedThePermit:      _ExtractWhoReceivedThePermit(doc),
-		issuedOn:                  _ExtractIssuedOn(doc),
-		issuedByEmployee:          _ExtractIssuedByEmployee(doc),
-		issuedCode:                _ExtractIssuedCode(doc),
+		id:                          _ExtractId(doc),
+		regionalForestryDirectorate: _ExtractRegionalForestryDirectorate(doc),
+		directiveNumber:             _ExtractDirectiveNumber(doc),
+		permittedFor:                _ExtractPermittedFor(doc),
+		allowedForester:             _ExtractAllowedForester(doc),
+		typeOfFelling:               _ExtractTypeOfFelling(doc),
+		section:                     _ExtractSection(doc),
+		subSection:                  _ExtractSubSection(doc),
+		cadastreId:                  _ExtractCadastreId(doc),
+		municipality:                _ExtractMunicipality(doc),
+		land:                        _ExtractLand(doc),
+		areaClearing:                _ExtractAreaClearing(doc),
+		ownershipType:               _ExtractOwnershipType(doc),
+		treesMarkedBy:               _ExtractTreesMarkedBy(doc),
+		controlMarkNumber:           _ExtractControlMarkNumber(doc),
+		controlMarkColor:            _ExtractMarkColor(doc),
+		dateOfCarnetInventory:       _ExtractDateOfCarnetInventory(doc),
+		expectedTreeExtraction:      _ExtractExpectedTreeExtraction(doc),
+		additionalRequirements:      _ExtractAdditionalRequirements(doc),
+		deadlineLogging:             _ExtractDeadlineLogging(doc),
+		deadlineMaterialsUsage:      _ExtractDeadlineMaterialsUsage(doc),
+		cleaningProcedure:           _ExtractCleaningProcedure(doc),
+		removalToTemporaryStorage:   _ExtractRemovalFromTemporaryStorage(doc),
+		issuedBy:                    _ExtractIssuedBy(doc),
+		whoReceivedThePermit:        _ExtractWhoReceivedThePermit(doc),
+		issuedOn:                    _ExtractIssuedOn(doc),
+		issuedByEmployee:            _ExtractIssuedByEmployee(doc),
+		issuedCode:                  _ExtractIssuedCode(doc),
+		permitIssuePlace:            _ExtractPermissionIssuePlace(doc),
 	}
 }
 
@@ -72,6 +76,12 @@ func _ExtractId(doc *goquery.Document) string {
 	return _CleanString(matched)
 }
 
+func _ExtractRegionalForestryDirectorate(doc *goquery.Document) string {
+	regionalForestryDirectorate := doc.Find("font:contains('Регионална дирекция по горите')").Find("b").Text()
+
+	return _CleanString(regionalForestryDirectorate)
+}
+
 func _ExtractDirectiveNumber(doc *goquery.Document) string {
 	directiveNumber := doc.Find("td:contains('На основание')").First().Find("b").Text()
 
@@ -82,6 +92,12 @@ func _ExtractPermittedFor(doc *goquery.Document) string {
 	permittedFor := doc.Find("td:contains('разрешава се на')").First().Find("b").Text()
 
 	return _CleanString(permittedFor)
+}
+
+func _ExtractAllowedForester(doc *goquery.Document) string {
+	allowedForester := doc.Find("td:contains('с нает регистриран лесовъд')").First().Find("b").Text()
+
+	return _CleanString(allowedForester)
 }
 
 func _ExtractTypeOfFelling(doc *goquery.Document) string {
@@ -97,9 +113,15 @@ func _ExtractSection(doc *goquery.Document) string {
 }
 
 func _ExtractSubSection(doc *goquery.Document) string {
-	subSection := doc.Find("td:contains('подотдел')").First().Find("b").Next().Text()
+	subSection := doc.Find("td:contains('подотдел')").First().Find("b").Next().First().Text()
 
 	return _CleanString(subSection)
+}
+
+func _ExtractCadastreId(doc *goquery.Document) string {
+	cadastreId := doc.Find("td:contains('подотдел')").First().Find("b").Next().Next().Text()
+
+	return _CleanString(cadastreId)
 }
 
 func _ExtractMunicipality(doc *goquery.Document) string {
@@ -150,10 +172,22 @@ func _ExtractMarkColor(doc *goquery.Document) string {
 	return _CleanString(markColor)
 }
 
-func _ExtractDateOfCarnetInventory(doc *goquery.Document) string {
-	dateOfCarnetInventory := doc.Find("td:contains('с контролна горска марка №')").First().Find("b").Next().Next().First().Text()
+func _ExtractDateOfCarnetInventory(doc *goquery.Document) time.Time {
+	dateOfCarnetInventoryLine := doc.Find("td:contains('с контролна горска марка №')").First().Find("b").Next().Next().First().Text()
 
-	return _CleanString(dateOfCarnetInventory)
+	dateOfCarnetInventoryLine = _CleanString(dateOfCarnetInventoryLine)
+
+	if dateOfCarnetInventoryLine == "" {
+		return time.Time{}
+	}
+
+	dateOfCarnetInventory, err := time.Parse(DateLayout, _CleanString(dateOfCarnetInventoryLine))
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	return dateOfCarnetInventory
 }
 
 func _ExtractExpectedTreeExtraction(doc *goquery.Document) float64 {
@@ -239,9 +273,9 @@ func _ExtractIssuedBy(doc *goquery.Document) string {
 }
 
 func _ExtractWhoReceivedThePermit(doc *goquery.Document) string {
-	whoReceivedThePermitLine := doc.Find("td:contains('Издал:')").First().Text()
+	whoReceivedThePermitLine := doc.Find("td:contains('Получил позволителното:')").First().Text()
 
-	whoReceivedThePermit := strings.Replace(whoReceivedThePermitLine, "Издал:", "", 1)
+	whoReceivedThePermit := strings.Replace(whoReceivedThePermitLine, "Получил позволителното:", "", 1)
 
 	return _CleanString(whoReceivedThePermit)
 }
@@ -276,4 +310,27 @@ func _ExtractIssuedCode(doc *goquery.Document) string {
 	matched := regex.FindStringSubmatch(noNewLines)[1]
 
 	return _CleanString(matched)
+}
+
+func _ExtractPermissionIssuePlace(doc *goquery.Document) PermitIssuePlace {
+	line := doc.Find("td:contains('Област ')").First().Text()
+
+	regex := regexp.MustCompile("Област(.+), община(.*), землище(.*), адрес(.*), подотдел(.*), GPS координати:(.*)")
+
+	matches := regex.FindStringSubmatch(line)
+
+	cleanedMatches := matches[1:]
+
+	for match := range cleanedMatches {
+		cleanedMatches[match] = _CleanString(cleanedMatches[match])
+	}
+
+	return PermitIssuePlace{
+		region:         cleanedMatches[0],
+		municipality:   cleanedMatches[1],
+		land:           cleanedMatches[2],
+		address:        cleanedMatches[3],
+		subSection:     cleanedMatches[4],
+		gpsCoordinates: cleanedMatches[5],
+	}
 }
