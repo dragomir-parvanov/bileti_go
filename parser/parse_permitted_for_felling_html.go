@@ -33,41 +33,41 @@ func ParsePermittedForFellingHTML(htmlResult io.Reader) ParsedResult {
 	additionalTable := categoryTable.Next()
 
 	return ParsedResult{
-		id:                          _ExtractId(mainTable),
-		regionalForestryDirectorate: _ExtractRegionalForestryDirectorate(headerTable),
-		directiveNumber:             _ExtractDirectiveNumber(mainTable),
-		permittedFor:                _ExtractPermittedFor(mainTable),
-		allowedForester:             _ExtractAllowedForester(mainTable),
-		typeOfFelling:               _ExtractTypeOfFelling(mainTable),
-		section:                     _ExtractSection(mainTable),
-		subSection:                  _ExtractSubSection(mainTable),
-		cadastreId:                  _ExtractCadastreId(mainTable),
-		municipality:                _ExtractMunicipality(mainTable),
-		land:                        _ExtractLand(mainTable),
-		areaClearing:                _ExtractAreaClearing(mainTable),
-		ownershipType:               _ExtractOwnershipType(mainTable),
-		treesMarkedBy:               _ExtractTreesMarkedBy(mainTable),
-		controlMarkNumber:           _ExtractControlMarkNumber(mainTable),
-		controlMarkColor:            _ExtractMarkColor(mainTable),
-		dateOfCarnetInventory:       _ExtractDateOfCarnetInventory(mainTable),
-		expectedTreeExtraction:      _ExtractExpectedTreeExtraction(mainTable),
+		id:                          extractId(mainTable),
+		regionalForestryDirectorate: extractRegionalForestryDirectorate(headerTable),
+		directiveNumber:             extractDirectiveNumber(mainTable),
+		permittedFor:                extractPermittedFor(mainTable),
+		allowedForester:             extractAllowedForester(mainTable),
+		typeOfFelling:               extractTypeOfFelling(mainTable),
+		section:                     extractSection(mainTable),
+		subSection:                  extractSubSection(mainTable),
+		cadastreId:                  extractCadastreId(mainTable),
+		municipality:                extractMunicipality(mainTable),
+		land:                        extractLand(mainTable),
+		areaClearing:                extractAreaClearing(mainTable),
+		ownershipType:               extractOwnershipType(mainTable),
+		treesMarkedBy:               extractTreesMarkedBy(mainTable),
+		controlMarkNumber:           extractControlMarkNumber(mainTable),
+		controlMarkColor:            extractMarkColor(mainTable),
+		dateOfCarnetInventory:       extractDateOfCarnetInventory(mainTable),
+		expectedTreeExtraction:      extractExpectedTreeExtraction(mainTable),
 		extraction:                  ParseTreeExtraction(categoryTable),
-		additionalRequirements:      _ExtractAdditionalRequirements(additionalTable),
-		deadlineLogging:             _ExtractDeadlineLogging(additionalTable),
-		deadlineMaterialsUsage:      _ExtractDeadlineMaterialsUsage(additionalTable),
-		cleaningProcedure:           _ExtractCleaningProcedure(additionalTable),
-		removalToTemporaryStorage:   _ExtractRemovalFromTemporaryStorage(additionalTable),
-		issuedBy:                    _ExtractIssuedBy(additionalTable),
-		whoReceivedThePermit:        _ExtractWhoReceivedThePermit(additionalTable),
-		issuedOn:                    _ExtractIssuedOn(additionalTable),
-		issuedByEmployee:            _ExtractIssuedByEmployee(additionalTable),
-		issuedCode:                  _ExtractIssuedCode(additionalTable),
-		permitIssuePlace:            _ExtractPermissionIssuePlace(additionalTable),
-		extension:                   _ExtractExtension(additionalTable),
+		additionalRequirements:      extractAdditionalRequirements(additionalTable),
+		deadlineLogging:             extractDeadlineLogging(additionalTable),
+		deadlineMaterialsUsage:      extractDeadlineMaterialsUsage(additionalTable),
+		cleaningProcedure:           extractCleaningProcedure(additionalTable),
+		removalToTemporaryStorage:   extractRemovalFromTemporaryStorage(additionalTable),
+		issuedBy:                    extractIssuedBy(additionalTable),
+		whoReceivedThePermit:        extractWhoReceivedThePermit(additionalTable),
+		issuedOn:                    extractIssuedOn(additionalTable),
+		issuedByEmployee:            extractIssuedByEmployee(additionalTable),
+		issuedCode:                  extractIssuedCode(additionalTable),
+		permitIssuePlace:            extractPermissionIssuePlace(additionalTable),
+		extension:                   extractExtension(additionalTable),
 	}
 }
 
-func _ExtractId(doc *goquery.Selection) string {
+func extractId(doc *goquery.Selection) string {
 	regex := regexp.MustCompile("(?i)позволително за сеч № ([0-9]+)")
 	text := doc.Text()
 
@@ -76,67 +76,67 @@ func _ExtractId(doc *goquery.Selection) string {
 	return utilsstring.CleanString(matched)
 }
 
-func _ExtractRegionalForestryDirectorate(doc *goquery.Selection) string {
+func extractRegionalForestryDirectorate(doc *goquery.Selection) string {
 	regionalForestryDirectorate := doc.Find("font:contains('Регионална дирекция по горите')").Find("b").Text()
 
 	return utilsstring.CleanString(regionalForestryDirectorate)
 }
 
-func _ExtractDirectiveNumber(doc *goquery.Selection) string {
+func extractDirectiveNumber(doc *goquery.Selection) string {
 	directiveNumber := doc.Find("td:contains('На основание')").First().Find("b").Text()
 
 	return utilsstring.CleanString(directiveNumber)
 }
 
-func _ExtractPermittedFor(doc *goquery.Selection) string {
+func extractPermittedFor(doc *goquery.Selection) string {
 	permittedFor := doc.Find("td:contains('разрешава се на')").First().Find("b").Text()
 
 	return utilsstring.CleanString(permittedFor)
 }
 
-func _ExtractAllowedForester(doc *goquery.Selection) string {
+func extractAllowedForester(doc *goquery.Selection) string {
 	allowedForester := doc.Find("td:contains('с нает регистриран лесовъд')").First().Find("b").Text()
 
 	return utilsstring.CleanString(allowedForester)
 }
 
-func _ExtractTypeOfFelling(doc *goquery.Selection) string {
+func extractTypeOfFelling(doc *goquery.Selection) string {
 	typeOfFelling := doc.Find("td:contains('ВИД НА СЕЧТА')").First().Find("b").Text()
 
 	return utilsstring.CleanString(typeOfFelling)
 }
 
-func _ExtractSection(doc *goquery.Selection) string {
+func extractSection(doc *goquery.Selection) string {
 	section := doc.Find("td:contains('да извърши добива в отдел №')").First().Find("b").First().Text()
 
 	return utilsstring.CleanString(section)
 }
 
-func _ExtractSubSection(doc *goquery.Selection) string {
+func extractSubSection(doc *goquery.Selection) string {
 	subSection := doc.Find("td:contains('подотдел')").First().Find("b").Next().First().Text()
 
 	return utilsstring.CleanString(subSection)
 }
 
-func _ExtractCadastreId(doc *goquery.Selection) string {
+func extractCadastreId(doc *goquery.Selection) string {
 	cadastreId := doc.Find("td:contains('подотдел')").First().Find("b").Next().Next().Text()
 
 	return utilsstring.CleanString(cadastreId)
 }
 
-func _ExtractMunicipality(doc *goquery.Selection) string {
+func extractMunicipality(doc *goquery.Selection) string {
 	municipality := doc.Find("td:contains('Община')").First().Find("b").First().Text()
 
 	return utilsstring.CleanString(municipality)
 }
 
-func _ExtractLand(doc *goquery.Selection) string {
+func extractLand(doc *goquery.Selection) string {
 	land := doc.Find("td:contains('Землище')").First().Find("b").Next().First().Text()
 
 	return utilsstring.RemoveBadSpaces(land)
 }
 
-func _ExtractAreaClearing(doc *goquery.Selection) float64 {
+func extractAreaClearing(doc *goquery.Selection) float64 {
 	areaClearing := doc.Find("td:contains('площно сечище от')").First().Find("b").Next().Next().First().Text()
 
 	result, err := strconv.ParseFloat(areaClearing, 64)
@@ -148,31 +148,31 @@ func _ExtractAreaClearing(doc *goquery.Selection) float64 {
 	return result
 }
 
-func _ExtractOwnershipType(doc *goquery.Selection) string {
+func extractOwnershipType(doc *goquery.Selection) string {
 	ownershipType := doc.Find("td:contains('Вид собственост')").First().Find("b").Next().Next().Next().First().Text()
 
 	return utilsstring.CleanString(ownershipType)
 }
 
-func _ExtractTreesMarkedBy(doc *goquery.Selection) string {
+func extractTreesMarkedBy(doc *goquery.Selection) string {
 	treesMarkedBy := doc.Find("td:contains('Дърветата са маркирани от')").First().Find("b").Text()
 
 	return utilsstring.CleanString(treesMarkedBy)
 }
 
-func _ExtractControlMarkNumber(doc *goquery.Selection) string {
+func extractControlMarkNumber(doc *goquery.Selection) string {
 	controlMark := doc.Find("td:contains('с контролна горска марка №')").First().Find("b").First().Text()
 
 	return utilsstring.CleanString(controlMark)
 }
 
-func _ExtractMarkColor(doc *goquery.Selection) string {
+func extractMarkColor(doc *goquery.Selection) string {
 	markColor := doc.Find("td:contains('с контролна горска марка №')").First().Find("b").Next().First().Text()
 
 	return utilsstring.CleanString(markColor)
 }
 
-func _ExtractDateOfCarnetInventory(doc *goquery.Selection) time.Time {
+func extractDateOfCarnetInventory(doc *goquery.Selection) time.Time {
 	dateOfCarnetInventoryLine := doc.Find("td:contains('с контролна горска марка №')").First().Find("b").Next().Next().First().Text()
 
 	dateOfCarnetInventoryLine = utilsstring.CleanString(dateOfCarnetInventoryLine)
@@ -190,7 +190,7 @@ func _ExtractDateOfCarnetInventory(doc *goquery.Selection) time.Time {
 	return dateOfCarnetInventory
 }
 
-func _ExtractExpectedTreeExtraction(doc *goquery.Selection) float64 {
+func extractExpectedTreeExtraction(doc *goquery.Selection) float64 {
 	expectedTreeExtraction := doc.Find("td:contains('Очакваният добив е')").First().Find("b").Text()
 
 	result, err := strconv.ParseFloat(expectedTreeExtraction, 64)
@@ -202,13 +202,13 @@ func _ExtractExpectedTreeExtraction(doc *goquery.Selection) float64 {
 	return result
 }
 
-func _ExtractAdditionalRequirements(doc *goquery.Selection) string {
+func extractAdditionalRequirements(doc *goquery.Selection) string {
 	additionalRequirements := doc.Find("td:contains('Допълнителни изисквания при провеждане на сечта :')").First().Find("b").Text()
 
 	return utilsstring.CleanString(additionalRequirements)
 }
 
-func _ExtractDeadlineLogging(doc *goquery.Selection) utilstime.TimeRange {
+func extractDeadlineLogging(doc *goquery.Selection) utilstime.TimeRange {
 	deadlineLoggingLine := doc.Find("td:contains('Срок за провеждане на сечта от')").First().Find("b")
 
 	deadlineLoggingFrom := utilsstring.CleanString(deadlineLoggingLine.First().Text())
@@ -230,7 +230,7 @@ func _ExtractDeadlineLogging(doc *goquery.Selection) utilstime.TimeRange {
 	return utilstime.TimeRange{From: resultFrom, To: resultTo}
 }
 
-func _ExtractDeadlineMaterialsUsage(doc *goquery.Selection) utilstime.TimeRange {
+func extractDeadlineMaterialsUsage(doc *goquery.Selection) utilstime.TimeRange {
 	deadlineLoggingLine := doc.Find("td:contains('Срок за извозване на материалите от сечището от')").First().Find("b")
 
 	deadlineMaterialsUsageFrom := utilsstring.CleanString(deadlineLoggingLine.First().Text())
@@ -252,19 +252,19 @@ func _ExtractDeadlineMaterialsUsage(doc *goquery.Selection) utilstime.TimeRange 
 	return utilstime.TimeRange{From: resultFrom, To: resultTo}
 }
 
-func _ExtractCleaningProcedure(doc *goquery.Selection) string {
+func extractCleaningProcedure(doc *goquery.Selection) string {
 	cleaningProcedure := doc.Find("td:contains('Начин на почистване на сечището :')").First().Find("b").Text()
 
 	return utilsstring.CleanString(cleaningProcedure)
 }
 
-func _ExtractRemovalFromTemporaryStorage(doc *goquery.Selection) string {
+func extractRemovalFromTemporaryStorage(doc *goquery.Selection) string {
 	removalFromTemporaryStorage := doc.Find("td:contains('Материалите ще се извозят до временен склад :')").First().Find("b").Text()
 
 	return utilsstring.CleanString(removalFromTemporaryStorage)
 }
 
-func _ExtractIssuedBy(doc *goquery.Selection) string {
+func extractIssuedBy(doc *goquery.Selection) string {
 	issuedByLine := doc.Find("td:contains('Издал:')").First().Text()
 
 	issuedBy := strings.Replace(issuedByLine, "Издал:", "", 1)
@@ -272,7 +272,7 @@ func _ExtractIssuedBy(doc *goquery.Selection) string {
 	return utilsstring.CleanString(issuedBy)
 }
 
-func _ExtractWhoReceivedThePermit(doc *goquery.Selection) string {
+func extractWhoReceivedThePermit(doc *goquery.Selection) string {
 	whoReceivedThePermitLine := doc.Find("td:contains('Получил позволителното:')").First().Text()
 
 	whoReceivedThePermit := strings.Replace(whoReceivedThePermitLine, "Получил позволителното:", "", 1)
@@ -280,7 +280,7 @@ func _ExtractWhoReceivedThePermit(doc *goquery.Selection) string {
 	return utilsstring.CleanString(whoReceivedThePermit)
 }
 
-func _ExtractIssuedOn(doc *goquery.Selection) time.Time {
+func extractIssuedOn(doc *goquery.Selection) time.Time {
 	issuedOnLine := doc.Find("td:contains('Дата:')").Find("b").Text()
 
 	issuedOn, err := time.Parse(DateLayout, utilsstring.CleanString(issuedOnLine))
@@ -292,7 +292,7 @@ func _ExtractIssuedOn(doc *goquery.Selection) time.Time {
 	return issuedOn
 }
 
-func _ExtractIssuedByEmployee(doc *goquery.Selection) string {
+func extractIssuedByEmployee(doc *goquery.Selection) string {
 	issuedByEmployeeLine := doc.Find("td:contains('Дата:')").Text()
 	noNewLines := strings.ReplaceAll(issuedByEmployeeLine, "\n", "")
 	regex := regexp.MustCompile("Издал служител : \\|(.+)\\| ")
@@ -302,7 +302,7 @@ func _ExtractIssuedByEmployee(doc *goquery.Selection) string {
 	return utilsstring.CleanString(matched)
 }
 
-func _ExtractIssuedCode(doc *goquery.Selection) string {
+func extractIssuedCode(doc *goquery.Selection) string {
 	issuedCodeLine := doc.Find("td:contains('Дата:')").Text()
 	noNewLines := strings.ReplaceAll(issuedCodeLine, "\n", "")
 	regex := regexp.MustCompile("Код: \\|(.+)\\|")
@@ -312,7 +312,7 @@ func _ExtractIssuedCode(doc *goquery.Selection) string {
 	return utilsstring.CleanString(matched)
 }
 
-func _ExtractPermissionIssuePlace(doc *goquery.Selection) PermitIssuePlace {
+func extractPermissionIssuePlace(doc *goquery.Selection) PermitIssuePlace {
 	line := doc.Find("td:contains('Област ')").First().Text()
 
 	regex := regexp.MustCompile("Област(.+), община(.*), землище(.*), адрес(.*), подотдел(.*), GPS координати:(.*)")
@@ -335,16 +335,16 @@ func _ExtractPermissionIssuePlace(doc *goquery.Selection) PermitIssuePlace {
 	}
 }
 
-func _ExtractExtension(doc *goquery.Selection) Extension {
+func extractExtension(doc *goquery.Selection) Extension {
 
 	return Extension{
-		loggingTo:        _ExtractLoggingToExtension(doc),
-		materialsUsageTo: _ExtractMaterialsUsageToExtension(doc),
-		issuedBy:         _ExtractIssuedByExtension(doc),
+		loggingTo:        extractLoggingToExtension(doc),
+		materialsUsageTo: extractMaterialsUsageToExtension(doc),
+		issuedBy:         extractIssuedByExtension(doc),
 	}
 }
 
-func _ExtractLoggingToExtension(doc *goquery.Selection) time.Time {
+func extractLoggingToExtension(doc *goquery.Selection) time.Time {
 	line := doc.Find("td:contains('За провеждане на сечта до :')").First().Text()
 
 	cleanedLine := utilsstring.CleanString(line)
@@ -366,7 +366,7 @@ func _ExtractLoggingToExtension(doc *goquery.Selection) time.Time {
 	return result
 }
 
-func _ExtractMaterialsUsageToExtension(doc *goquery.Selection) time.Time {
+func extractMaterialsUsageToExtension(doc *goquery.Selection) time.Time {
 	line := doc.Find("td:contains('За извоз на материалите до :')").First().Text()
 
 	cleanedLine := utilsstring.CleanString(line)
@@ -388,7 +388,7 @@ func _ExtractMaterialsUsageToExtension(doc *goquery.Selection) time.Time {
 	return result
 }
 
-func _ExtractIssuedByExtension(doc *goquery.Selection) string {
+func extractIssuedByExtension(doc *goquery.Selection) string {
 	issuedByLine := doc.Find("td:contains('Издал: ')").First().Text()
 
 	issuedBy := strings.Replace(issuedByLine, "Издал: ", "", 1)
