@@ -24,6 +24,7 @@ type ParsedResult struct {
 	controlMarkColor            string
 	dateOfCarnetInventory       time.Time
 	expectedTreeExtraction      float64
+	extraction                  []TreeExtraction
 	additionalRequirements      string
 	deadlineLogging             utilstime.TimeRange
 	deadlineMaterialsUsage      utilstime.TimeRange
@@ -37,10 +38,21 @@ type ParsedResult struct {
 	permitIssuePlace            PermitIssuePlace
 	extension                   Extension
 }
+type ExtractionCategory string
 
-type TreeExtractionCategory struct {
+const (
+	LargeConstructionTimber  ExtractionCategory = "LargeConstructionTimber"
+	MediumConstructionTimber ExtractionCategory = "MediumConstructionTimber"
+	SmallConstructionTimber  ExtractionCategory = "SmallConstructionTimber"
+	Wood                     ExtractionCategory = "Wood"
+	TopHamper                ExtractionCategory = "TopHamper"
+)
+
+type TreeExtraction struct {
+	category ExtractionCategory
 	treeType string
 	value    float64
+	note     string
 }
 
 type PermitIssuePlace struct {

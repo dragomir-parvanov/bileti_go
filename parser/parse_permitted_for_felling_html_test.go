@@ -1,27 +1,20 @@
+/**
+This test file is using the
+parse_bileti_test.html file for its tests
+*/
+
 package parser
 
 import (
-	"io"
-	"log"
-	"os"
 	"testing"
 	"time"
 )
 
-const TestFileName = "parse_bileti_test.html"
-
-func GetTestFile() io.Reader {
-	file, err := os.Open(TestFileName)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	return file
-}
+const TestPermitFile = "parse_bileti_test.html"
 
 func TestShouldReturnId(t *testing.T) {
 
-	testFile := GetTestFile()
+	testFile := GetTestFile(TestPermitFile)
 
 	result := ParsePermittedForFellingHTML(testFile).id
 
@@ -33,7 +26,7 @@ func TestShouldReturnId(t *testing.T) {
 }
 
 func TestShouldReturnRegionalForestryDirectorate(t *testing.T) {
-	testFile := GetTestFile()
+	testFile := GetTestFile(TestPermitFile)
 
 	result := ParsePermittedForFellingHTML(testFile).regionalForestryDirectorate
 
@@ -46,7 +39,7 @@ func TestShouldReturnRegionalForestryDirectorate(t *testing.T) {
 
 func TestShouldReturnDirectiveNumber(t *testing.T) {
 
-	testFile := GetTestFile()
+	testFile := GetTestFile(TestPermitFile)
 
 	result := ParsePermittedForFellingHTML(testFile).directiveNumber
 
@@ -59,7 +52,7 @@ func TestShouldReturnDirectiveNumber(t *testing.T) {
 
 func TestShouldReturnPermittedFor(t *testing.T) {
 
-	testFile := GetTestFile()
+	testFile := GetTestFile(TestPermitFile)
 
 	result := ParsePermittedForFellingHTML(testFile).permittedFor
 
@@ -72,7 +65,7 @@ func TestShouldReturnPermittedFor(t *testing.T) {
 
 func TestShouldReturnAllowedForester(t *testing.T) {
 
-	testFile := GetTestFile()
+	testFile := GetTestFile(TestPermitFile)
 
 	result := ParsePermittedForFellingHTML(testFile).allowedForester
 
@@ -85,7 +78,7 @@ func TestShouldReturnAllowedForester(t *testing.T) {
 
 func TestShouldReturnTypeOfFelling(t *testing.T) {
 
-	testFile := GetTestFile()
+	testFile := GetTestFile(TestPermitFile)
 
 	result := ParsePermittedForFellingHTML(testFile).typeOfFelling
 
@@ -98,7 +91,7 @@ func TestShouldReturnTypeOfFelling(t *testing.T) {
 
 func TestShouldReturnSection(t *testing.T) {
 
-	testFile := GetTestFile()
+	testFile := GetTestFile(TestPermitFile)
 
 	result := ParsePermittedForFellingHTML(testFile).section
 
@@ -111,7 +104,7 @@ func TestShouldReturnSection(t *testing.T) {
 
 func TestShouldReturnSubSection(t *testing.T) {
 
-	testFile := GetTestFile()
+	testFile := GetTestFile(TestPermitFile)
 
 	result := ParsePermittedForFellingHTML(testFile).subSection
 
@@ -124,7 +117,7 @@ func TestShouldReturnSubSection(t *testing.T) {
 
 func TestShouldReturnCadastreId(t *testing.T) {
 
-	testFile := GetTestFile()
+	testFile := GetTestFile(TestPermitFile)
 
 	result := ParsePermittedForFellingHTML(testFile).cadastreId
 
@@ -137,7 +130,7 @@ func TestShouldReturnCadastreId(t *testing.T) {
 
 func TestShouldReturnMunicipality(t *testing.T) {
 
-	testFile := GetTestFile()
+	testFile := GetTestFile(TestPermitFile)
 
 	result := ParsePermittedForFellingHTML(testFile).municipality
 
@@ -150,7 +143,7 @@ func TestShouldReturnMunicipality(t *testing.T) {
 
 func TestShouldReturnLand(t *testing.T) {
 
-	testFile := GetTestFile()
+	testFile := GetTestFile(TestPermitFile)
 
 	result := ParsePermittedForFellingHTML(testFile).land
 
@@ -162,7 +155,7 @@ func TestShouldReturnLand(t *testing.T) {
 }
 
 func TestShouldReturnAreaClearing(t *testing.T) {
-	testFile := GetTestFile()
+	testFile := GetTestFile(TestPermitFile)
 
 	result := ParsePermittedForFellingHTML(testFile).areaClearing
 
@@ -174,7 +167,7 @@ func TestShouldReturnAreaClearing(t *testing.T) {
 }
 
 func TestShouldReturnOwnershipType(t *testing.T) {
-	testFile := GetTestFile()
+	testFile := GetTestFile(TestPermitFile)
 
 	result := ParsePermittedForFellingHTML(testFile).ownershipType
 
@@ -186,7 +179,7 @@ func TestShouldReturnOwnershipType(t *testing.T) {
 }
 
 func TestShouldReturnTreesMarkedBy(t *testing.T) {
-	testFile := GetTestFile()
+	testFile := GetTestFile(TestPermitFile)
 
 	result := ParsePermittedForFellingHTML(testFile).treesMarkedBy
 
@@ -198,7 +191,7 @@ func TestShouldReturnTreesMarkedBy(t *testing.T) {
 }
 
 func TestShouldReturnControlMarkNumber(t *testing.T) {
-	testFile := GetTestFile()
+	testFile := GetTestFile(TestPermitFile)
 
 	result := ParsePermittedForFellingHTML(testFile).controlMarkNumber
 
@@ -210,7 +203,7 @@ func TestShouldReturnControlMarkNumber(t *testing.T) {
 }
 
 func TestShouldReturnMarkColor(t *testing.T) {
-	testFile := GetTestFile()
+	testFile := GetTestFile(TestPermitFile)
 
 	result := ParsePermittedForFellingHTML(testFile).controlMarkColor
 
@@ -222,7 +215,7 @@ func TestShouldReturnMarkColor(t *testing.T) {
 }
 
 func TestShouldReturnDateOfCarnetInventory(t *testing.T) {
-	testFile := GetTestFile()
+	testFile := GetTestFile(TestPermitFile)
 
 	result := ParsePermittedForFellingHTML(testFile).dateOfCarnetInventory
 
@@ -234,7 +227,7 @@ func TestShouldReturnDateOfCarnetInventory(t *testing.T) {
 }
 
 func TestShouldReturnExpectedTreeExtraction(t *testing.T) {
-	testFile := GetTestFile()
+	testFile := GetTestFile(TestPermitFile)
 
 	result := ParsePermittedForFellingHTML(testFile).expectedTreeExtraction
 
@@ -246,7 +239,7 @@ func TestShouldReturnExpectedTreeExtraction(t *testing.T) {
 }
 
 func TestShouldReturnAdditionalRequirements(t *testing.T) {
-	testFile := GetTestFile()
+	testFile := GetTestFile(TestPermitFile)
 
 	result := ParsePermittedForFellingHTML(testFile).additionalRequirements
 
@@ -259,7 +252,7 @@ func TestShouldReturnAdditionalRequirements(t *testing.T) {
 }
 
 func TestShouldReturnDeadlineLoggingFrom(t *testing.T) {
-	testFile := GetTestFile()
+	testFile := GetTestFile(TestPermitFile)
 
 	result := ParsePermittedForFellingHTML(testFile).deadlineLogging.From
 
@@ -275,7 +268,7 @@ func TestShouldReturnDeadlineLoggingFrom(t *testing.T) {
 }
 
 func TestShouldReturnDeadlineLoggingTo(t *testing.T) {
-	testFile := GetTestFile()
+	testFile := GetTestFile(TestPermitFile)
 
 	result := ParsePermittedForFellingHTML(testFile).deadlineLogging.To
 
@@ -291,7 +284,7 @@ func TestShouldReturnDeadlineLoggingTo(t *testing.T) {
 }
 
 func TestShouldReturnDeadlineMaterialsUsageFrom(t *testing.T) {
-	testFile := GetTestFile()
+	testFile := GetTestFile(TestPermitFile)
 
 	result := ParsePermittedForFellingHTML(testFile).deadlineMaterialsUsage.From
 
@@ -307,7 +300,7 @@ func TestShouldReturnDeadlineMaterialsUsageFrom(t *testing.T) {
 }
 
 func TestShouldReturnDeadlineMaterialsUsageTo(t *testing.T) {
-	testFile := GetTestFile()
+	testFile := GetTestFile(TestPermitFile)
 
 	result := ParsePermittedForFellingHTML(testFile).deadlineMaterialsUsage.To
 
@@ -323,7 +316,7 @@ func TestShouldReturnDeadlineMaterialsUsageTo(t *testing.T) {
 }
 
 func TestShouldReturnCleaningProcedure(t *testing.T) {
-	testFile := GetTestFile()
+	testFile := GetTestFile(TestPermitFile)
 
 	result := ParsePermittedForFellingHTML(testFile).cleaningProcedure
 
@@ -335,7 +328,7 @@ func TestShouldReturnCleaningProcedure(t *testing.T) {
 }
 
 func TestShouldReturnRemovalToTemporaryStorage(t *testing.T) {
-	testFile := GetTestFile()
+	testFile := GetTestFile(TestPermitFile)
 
 	result := ParsePermittedForFellingHTML(testFile).removalToTemporaryStorage
 
@@ -347,7 +340,7 @@ func TestShouldReturnRemovalToTemporaryStorage(t *testing.T) {
 }
 
 func TestShouldReturnIssuedBy(t *testing.T) {
-	testFile := GetTestFile()
+	testFile := GetTestFile(TestPermitFile)
 
 	result := ParsePermittedForFellingHTML(testFile).issuedBy
 
@@ -359,7 +352,7 @@ func TestShouldReturnIssuedBy(t *testing.T) {
 }
 
 func TestShouldReturnWhoReceivedThePermit(t *testing.T) {
-	testFile := GetTestFile()
+	testFile := GetTestFile(TestPermitFile)
 
 	result := ParsePermittedForFellingHTML(testFile).whoReceivedThePermit
 
@@ -371,7 +364,7 @@ func TestShouldReturnWhoReceivedThePermit(t *testing.T) {
 }
 
 func TestShouldReturnIssuedOn(t *testing.T) {
-	testFile := GetTestFile()
+	testFile := GetTestFile(TestPermitFile)
 
 	result := ParsePermittedForFellingHTML(testFile).issuedOn
 
@@ -387,7 +380,7 @@ func TestShouldReturnIssuedOn(t *testing.T) {
 }
 
 func TestShouldReturnIssuedByEmployee(t *testing.T) {
-	testFile := GetTestFile()
+	testFile := GetTestFile(TestPermitFile)
 
 	result := ParsePermittedForFellingHTML(testFile).issuedByEmployee
 
@@ -399,7 +392,7 @@ func TestShouldReturnIssuedByEmployee(t *testing.T) {
 }
 
 func TestShouldReturnIssuedCode(t *testing.T) {
-	testFile := GetTestFile()
+	testFile := GetTestFile(TestPermitFile)
 
 	result := ParsePermittedForFellingHTML(testFile).issuedCode
 
@@ -411,7 +404,7 @@ func TestShouldReturnIssuedCode(t *testing.T) {
 }
 
 func TestShouldReturnPermitIssueRegion(t *testing.T) {
-	testFile := GetTestFile()
+	testFile := GetTestFile(TestPermitFile)
 
 	result := ParsePermittedForFellingHTML(testFile).permitIssuePlace.region
 
@@ -423,7 +416,7 @@ func TestShouldReturnPermitIssueRegion(t *testing.T) {
 }
 
 func TestShouldReturnPermitIssueMunicipality(t *testing.T) {
-	testFile := GetTestFile()
+	testFile := GetTestFile(TestPermitFile)
 
 	result := ParsePermittedForFellingHTML(testFile).permitIssuePlace.municipality
 
@@ -435,7 +428,7 @@ func TestShouldReturnPermitIssueMunicipality(t *testing.T) {
 }
 
 func TestShouldReturnPermitIssueLand(t *testing.T) {
-	testFile := GetTestFile()
+	testFile := GetTestFile(TestPermitFile)
 
 	result := ParsePermittedForFellingHTML(testFile).permitIssuePlace.land
 
@@ -447,7 +440,7 @@ func TestShouldReturnPermitIssueLand(t *testing.T) {
 }
 
 func TestShouldReturnPermitIssueAddress(t *testing.T) {
-	testFile := GetTestFile()
+	testFile := GetTestFile(TestPermitFile)
 
 	result := ParsePermittedForFellingHTML(testFile).permitIssuePlace.address
 
@@ -459,7 +452,7 @@ func TestShouldReturnPermitIssueAddress(t *testing.T) {
 }
 
 func TestShouldReturnPermitIssueSubsection(t *testing.T) {
-	testFile := GetTestFile()
+	testFile := GetTestFile(TestPermitFile)
 
 	result := ParsePermittedForFellingHTML(testFile).permitIssuePlace.subSection
 
@@ -471,7 +464,7 @@ func TestShouldReturnPermitIssueSubsection(t *testing.T) {
 }
 
 func TestShouldReturnPermitIssueGpsCoordinates(t *testing.T) {
-	testFile := GetTestFile()
+	testFile := GetTestFile(TestPermitFile)
 
 	result := ParsePermittedForFellingHTML(testFile).permitIssuePlace.gpsCoordinates
 
@@ -483,7 +476,7 @@ func TestShouldReturnPermitIssueGpsCoordinates(t *testing.T) {
 }
 
 func TestShouldReturnExtensionLoggingTo(t *testing.T) {
-	testFile := GetTestFile()
+	testFile := GetTestFile(TestPermitFile)
 
 	result := ParsePermittedForFellingHTML(testFile).extension.loggingTo
 
@@ -499,7 +492,7 @@ func TestShouldReturnExtensionLoggingTo(t *testing.T) {
 }
 
 func TestShouldReturnExtensionMaterialsUsageTo(t *testing.T) {
-	testFile := GetTestFile()
+	testFile := GetTestFile(TestPermitFile)
 
 	result := ParsePermittedForFellingHTML(testFile).extension.materialsUsageTo
 
@@ -515,7 +508,7 @@ func TestShouldReturnExtensionMaterialsUsageTo(t *testing.T) {
 }
 
 func TestShouldReturnExtensionIssuedBy(t *testing.T) {
-	testFile := GetTestFile()
+	testFile := GetTestFile(TestPermitFile)
 
 	result := ParsePermittedForFellingHTML(testFile).extension.issuedBy
 
@@ -523,5 +516,15 @@ func TestShouldReturnExtensionIssuedBy(t *testing.T) {
 
 	if result != expected {
 		t.Errorf("Got %s, expected %s", result, expected)
+	}
+}
+
+func TestShouldReturnExtraction(t *testing.T) {
+	testFile := GetTestFile(TestPermitFile)
+
+	result := ParsePermittedForFellingHTML(testFile).extraction
+
+	if len(result) != 1 {
+		t.Errorf("Got %v, expected 1", len(result))
 	}
 }

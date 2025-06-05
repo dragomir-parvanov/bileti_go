@@ -14,8 +14,20 @@ func TestOnOtherStringShouldReturnFalse(t *testing.T) {
 	}
 }
 
-func TestOnDotsShouldReturnTrue(t *testing.T) {
+func TestOnOnlyDotsShouldReturnTrue(t *testing.T) {
 	param := "....."
+
+	actual := IsPlaceholder(param)
+
+	expected := true
+
+	if actual != expected {
+		t.Errorf("IsPlaceholder returned %t but expected %t", actual, expected)
+	}
+}
+
+func TestOnOnlyHyphensShouldReturnTrue(t *testing.T) {
+	param := "-----"
 
 	actual := IsPlaceholder(param)
 
