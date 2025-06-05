@@ -145,7 +145,7 @@ func isSeparator(str string, prevString string) bool {
 }
 
 func isNumberSeparator(str string) bool {
-	regex := regexp.MustCompile("^[1-5]\\.$")
+	regex := regexp.MustCompile(`^[1-5]\\.$`)
 
 	isMatch := regex.MatchString(str)
 
