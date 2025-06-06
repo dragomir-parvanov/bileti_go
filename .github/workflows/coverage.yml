@@ -7,12 +7,21 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+
+      - name: Setup Go
+        uses: actions/setup-go@v5
+
+      - name: Install dependencies
+        run: go get .
+
+      - name: generate test coverage
+        run: go test ./... -coverprofile=./cover.out -covermode=atomic -coverpkg=./...
+
       - name: check test coverage
         uses: vladopajic/go-test-coverage@v2
         with:
           profile: cover.out
           threshold-total: 90
-
           git-token: ${{ github.ref_name == 'main' && secrets.GITHUB_TOKEN || '' }}
           git-branch: badges
 
