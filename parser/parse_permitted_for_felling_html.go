@@ -68,7 +68,7 @@ func ParsePermittedForFellingHTML(htmlResult io.Reader) ParsedResult {
 }
 
 func extractId(doc *goquery.Selection) string {
-	regex := regexp.MustCompile("(?i)позволително за сеч № ([0-9]+)")
+	regex := regexp.MustCompile(`(?i)позволително за сеч № ([0-9]+)`)
 	text := doc.Text()
 
 	matched := regex.FindStringSubmatch(text)[1]
@@ -295,7 +295,7 @@ func extractIssuedOn(doc *goquery.Selection) time.Time {
 func extractIssuedByEmployee(doc *goquery.Selection) string {
 	issuedByEmployeeLine := doc.Find("td:contains('Дата:')").Text()
 	noNewLines := strings.ReplaceAll(issuedByEmployeeLine, "\n", "")
-	regex := regexp.MustCompile(`Издал служител : \\|(.+)\\| `)
+	regex := regexp.MustCompile(`Издал служител : \|(.+)\| `)
 
 	matched := regex.FindStringSubmatch(noNewLines)[1]
 
@@ -305,7 +305,7 @@ func extractIssuedByEmployee(doc *goquery.Selection) string {
 func extractIssuedCode(doc *goquery.Selection) string {
 	issuedCodeLine := doc.Find("td:contains('Дата:')").Text()
 	noNewLines := strings.ReplaceAll(issuedCodeLine, "\n", "")
-	regex := regexp.MustCompile(`Код: \\|(.+)\\|`)
+	regex := regexp.MustCompile(`Код: \|(.+)\|`)
 
 	matched := regex.FindStringSubmatch(noNewLines)[1]
 
