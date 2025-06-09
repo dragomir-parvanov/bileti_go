@@ -1,16 +1,20 @@
 package certificate_protocol_parse_fields
 
 import (
+	"bileti_go/parser"
 	"github.com/PuerkitoBio/goquery"
 	"regexp"
+	"time"
 )
 
-func ExtractPermittedForFellingId(selection *goquery.Selection) string {
+func ExtractPermittedForFellingDate(selection *goquery.Selection) (time.Time, error) {
 	line := selection.Find("td:contains('Към позволително за сеч № ')").First().Text()
 
 	regex := regexp.MustCompile(`Към позволително за сеч № (.*)/(.*) год.`)
 
-	id := regex.FindStringSubmatch(line)[1]
+	id := regex.FindStringSubmatch(line)[2]
 
-	return id
+	date, err := time.ParseInLocation(parser.DateLayout, id, parser.GetLocation())
+
+	return date, err
 }

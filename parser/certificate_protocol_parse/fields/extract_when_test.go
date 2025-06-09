@@ -1,6 +1,7 @@
 package certificate_protocol_parse_fields
 
 import (
+	"bileti_go/parser"
 	"log"
 	"testing"
 	"time"
@@ -23,7 +24,7 @@ func TestOnWhenShouldReturnTheTime(t *testing.T) {
 	}
 
 	expected := time.Date(
-		2025, 4, 8, 0, 0, 0, 0, time.Local)
+		2025, 4, 8, 0, 0, 0, 0, parser.GetLocation())
 
 	if actual.Compare(expected) != 0 {
 		t.Errorf("The time should be %s but it is %s", expected, actual)
