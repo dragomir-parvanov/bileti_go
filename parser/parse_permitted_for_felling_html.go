@@ -12,8 +12,6 @@ import (
 	"time"
 )
 
-const DateLayout = "02.01.2006"
-
 func ParsePermittedForFellingHTML(htmlResult io.Reader) ParsedResult {
 
 	doc, err := goquery.NewDocumentFromReader(htmlResult)

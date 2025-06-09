@@ -25,3 +25,4 @@ jobs:
           git-token: ${{ github.ref_name == 'main' && secrets.GITHUB_TOKEN || '' }}
           git-branch: badges
 
+# go tool cover -html=.test/c.out -o .test/test-coverage.html
