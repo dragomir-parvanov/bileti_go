@@ -11,7 +11,7 @@ func ExtractWhen(selection *goquery.Selection) (time.Time, error) {
 
 	loc := parser.GetLocation()
 
-	line := selection.Find("td").First().Find("b").First().Text()
+	line := selection.Find("td:contains('Днес: ')").First().Find("b").First().Text()
 
 	cleaned := utilsstring.CleanString(line)
 

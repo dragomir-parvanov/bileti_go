@@ -18,5 +18,9 @@ func ParseCertificateProtocol(reader io.Reader) CertificateProtocolParseResult {
 		regionalForestryDirectorate: certificate_protocol_parse_fields.ExtractRegionalForestryDirectorate(selection),
 		permittedForFellingId:       certificate_protocol_parse_fields.ExtractPermittedForFellingId(selection),
 		permittedForFellingDate:     utils.Must(certificate_protocol_parse_fields.ExtractPermittedForFellingDate(selection)),
+		when:                        utils.Must(certificate_protocol_parse_fields.ExtractWhen(selection)),
+		findingsRecordIssuedBy:      certificate_protocol_parse_fields.ExtractFindingsRecordIssuedBy(selection),
+		findingsRecordWitnessedBy:   certificate_protocol_parse_fields.ExtractFindingsRecordWitnessedBy(selection),
+		municipality:                certificate_protocol_parse_fields.ExtractMunicipality(selection),
 	}
 }

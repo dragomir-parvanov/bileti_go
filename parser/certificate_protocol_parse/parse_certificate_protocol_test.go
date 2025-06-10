@@ -202,6 +202,10 @@ func TestShouldMatchObject(t *testing.T) {
 		regionalForestryDirectorate: "Варна",
 		permittedForFellingId:       "0800703",
 		permittedForFellingDate:     time.Date(2025, 1, 8, 0, 0, 0, 0, parser.GetLocation()),
+		when:                        time.Date(2025, 4, 8, 0, 0, 0, 0, parser.GetLocation()),
+		findingsRecordWitnessedBy:   "",
+		findingsRecordIssuedBy:      "",
+		municipality:                "Балчик",
 	}
 
 	if reflect.DeepEqual(actual, expected) == false {
