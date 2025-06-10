@@ -1,4 +1,4 @@
-package certificate_protocol_parse_fields
+package certificate_protocol_parse
 
 import (
 	"bileti_go/parser"
@@ -9,7 +9,7 @@ type CertificateProtocolParseResult struct {
 	id                           string
 	regionalForestryDirectorate  string
 	permittedForFellingId        string
-	permittedForFellingDate      string
+	permittedForFellingDate      time.Time
 	when                         time.Time
 	findingsRecordIssuedBy       string
 	findingsRecordWitnessedBy    string

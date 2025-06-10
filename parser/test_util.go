@@ -1,16 +1,13 @@
 package parser
 
 import (
+	"bileti_go/utils"
 	"io"
-	"log"
 	"os"
 )
 
 func GetTestFile(filePath string) io.Reader {
-	file, err := os.Open(filePath)
-	if err != nil {
-		log.Fatal(err)
-	}
+	file := utils.Must(os.Open(filePath))
 
 	return file
 }

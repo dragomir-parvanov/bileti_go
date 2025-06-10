@@ -1,7 +1,7 @@
 package parser
 
 import (
-	"log"
+	"bileti_go/utils"
 	"time"
 )
 
@@ -9,11 +9,7 @@ const DateLayout = "02.01.2006"
 
 func GetLocation() *time.Location {
 
-	loc, err := time.LoadLocation("Europe/Sofia")
-
-	if err != nil {
-		log.Fatal(err)
-	}
+	loc := utils.Must(time.LoadLocation("Europe/Sofia"))
 
 	return loc
 }

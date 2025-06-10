@@ -2,7 +2,7 @@ package certificate_protocol_parse_fields
 
 import (
 	"bileti_go/parser"
-	"log"
+	"bileti_go/utils"
 	"testing"
 	"time"
 )
@@ -17,11 +17,7 @@ func TestOnWhenShouldReturnTheTime(t *testing.T) {
   </tr>
 </table>`
 
-	actual, err := ExtractWhen(GetTestSelection(html))
-
-	if err != nil {
-		log.Fatal(err)
-	}
+	actual := utils.Must(ExtractWhen(GetTestSelection(html)))
 
 	expected := time.Date(
 		2025, 4, 8, 0, 0, 0, 0, parser.GetLocation())

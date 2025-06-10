@@ -256,13 +256,9 @@ func TestShouldReturnDeadlineLoggingFrom(t *testing.T) {
 
 	result := ParsePermittedForFellingHTML(testFile).deadlineLogging.From
 
-	expected, err := time.Parse("02.01.2006", "27.01.2025")
+	expected := time.Date(2025, 1, 27, 0, 0, 0, 0, GetLocation())
 
-	if err != nil {
-		t.Errorf("Got %s, expected error", err)
-	}
-
-	if result != expected {
+	if result.Compare(expected) != 0 {
 		t.Errorf("Got %s, expected %s", result, expected)
 	}
 }
@@ -272,13 +268,9 @@ func TestShouldReturnDeadlineLoggingTo(t *testing.T) {
 
 	result := ParsePermittedForFellingHTML(testFile).deadlineLogging.To
 
-	expected, err := time.Parse("02.01.2006", "31.12.2025")
+	expected := time.Date(2025, 12, 31, 0, 0, 0, 0, GetLocation())
 
-	if err != nil {
-		t.Errorf("Got %s, expected error", err)
-	}
-
-	if result != expected {
+	if result.Compare(expected) != 0 {
 		t.Errorf("Got %s, expected %s", result, expected)
 	}
 }
@@ -288,13 +280,9 @@ func TestShouldReturnDeadlineMaterialsUsageFrom(t *testing.T) {
 
 	result := ParsePermittedForFellingHTML(testFile).deadlineMaterialsUsage.From
 
-	expected, err := time.Parse("02.01.2006", "27.01.2025")
+	expected := time.Date(2025, 1, 27, 0, 0, 0, 0, GetLocation())
 
-	if err != nil {
-		t.Errorf("Got %s, expected error", err)
-	}
-
-	if result != expected {
+	if result.Compare(expected) != 0 {
 		t.Errorf("Got %s, expected %s", result, expected)
 	}
 }
@@ -304,13 +292,9 @@ func TestShouldReturnDeadlineMaterialsUsageTo(t *testing.T) {
 
 	result := ParsePermittedForFellingHTML(testFile).deadlineMaterialsUsage.To
 
-	expected, err := time.Parse("02.01.2006", "31.12.2025")
+	expected := time.Date(2025, 12, 31, 0, 0, 0, 0, GetLocation())
 
-	if err != nil {
-		t.Errorf("Got %s, expected error", err)
-	}
-
-	if result != expected {
+	if result.Compare(expected) != 0 {
 		t.Errorf("Got %s, expected %s", result, expected)
 	}
 }
@@ -368,13 +352,9 @@ func TestShouldReturnIssuedOn(t *testing.T) {
 
 	result := ParsePermittedForFellingHTML(testFile).issuedOn
 
-	expected, err := time.Parse("02.01.2006", "24.01.2025")
+	expected := time.Date(2025, 1, 24, 0, 0, 0, 0, GetLocation())
 
-	if err != nil {
-		t.Errorf("Got %s, expected error", err)
-	}
-
-	if result != expected {
+	if result.Compare(expected) != 0 {
 		t.Errorf("Got %s, expected %s", result, expected)
 	}
 }
@@ -480,13 +460,9 @@ func TestShouldReturnExtensionLoggingTo(t *testing.T) {
 
 	result := ParsePermittedForFellingHTML(testFile).extension.loggingTo
 
-	expected, err := time.Parse("02.01.2006", "27.02.2025")
+	expected := time.Date(2025, 2, 27, 0, 0, 0, 0, GetLocation())
 
-	if err != nil {
-		t.Errorf("Got %s, expected error", err)
-	}
-
-	if result != expected {
+	if result.Compare(expected) != 0 {
 		t.Errorf("Got %s, expected %s", result, expected)
 	}
 }
@@ -496,13 +472,9 @@ func TestShouldReturnExtensionMaterialsUsageTo(t *testing.T) {
 
 	result := ParsePermittedForFellingHTML(testFile).extension.materialsUsageTo
 
-	expected, err := time.Parse("02.01.2006", "28.02.2025")
+	expected := time.Date(2025, 2, 28, 0, 0, 0, 0, GetLocation())
 
-	if err != nil {
-		t.Errorf("Got %s, expected error", err)
-	}
-
-	if result != expected {
+	if result.Compare(expected) != 0 {
 		t.Errorf("Got %s, expected %s", result, expected)
 	}
 }

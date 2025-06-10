@@ -1,11 +1,11 @@
 package parser
 
 import (
+	"bileti_go/utils"
 	utilsstring "bileti_go/utils/string"
 	utilstime "bileti_go/utils/time"
 	"github.com/PuerkitoBio/goquery"
 	"io"
-	"log"
 	"regexp"
 	"strconv"
 	"strings"
@@ -14,11 +14,7 @@ import (
 
 func ParsePermittedForFellingHTML(htmlResult io.Reader) ParsedResult {
 
-	doc, err := goquery.NewDocumentFromReader(htmlResult)
-
-	if err != nil {
-		log.Fatal(err)
-	}
+	doc := utils.Must(goquery.NewDocumentFromReader(htmlResult))
 
 	tables := doc.Find("table")
 
@@ -137,11 +133,7 @@ func extractLand(doc *goquery.Selection) string {
 func extractAreaClearing(doc *goquery.Selection) float64 {
 	areaClearing := doc.Find("td:contains('площно сечище от')").First().Find("b").Next().Next().First().Text()
 
-	result, err := strconv.ParseFloat(areaClearing, 64)
-
-	if err != nil {
-		log.Fatal(err)
-	}
+	result := utils.Must(strconv.ParseFloat(areaClearing, 64))
 
 	return result
 }
@@ -179,11 +171,11 @@ func extractDateOfCarnetInventory(doc *goquery.Selection) time.Time {
 		return time.Time{}
 	}
 
-	dateOfCarnetInventory, err := time.Parse(DateLayout, utilsstring.CleanString(dateOfCarnetInventoryLine))
+	cleanedLine := utilsstring.CleanString(dateOfCarnetInventoryLine)
 
-	if err != nil {
-		log.Fatal(err)
-	}
+	result, err := time.ParseInLocation(DateLayout, cleanedLine, GetLocation())
+
+	dateOfCarnetInventory := utils.Must(result, err)
 
 	return dateOfCarnetInventory
 }
@@ -191,11 +183,7 @@ func extractDateOfCarnetInventory(doc *goquery.Selection) time.Time {
 func extractExpectedTreeExtraction(doc *goquery.Selection) float64 {
 	expectedTreeExtraction := doc.Find("td:contains('Очакваният добив е')").First().Find("b").Text()
 
-	result, err := strconv.ParseFloat(expectedTreeExtraction, 64)
-
-	if err != nil {
-		log.Fatal(err)
-	}
+	result := utils.Must(strconv.ParseFloat(expectedTreeExtraction, 64))
 
 	return result
 }
@@ -213,17 +201,9 @@ func extractDeadlineLogging(doc *goquery.Selection) utilstime.TimeRange {
 
 	deadlineLoggingTo := utilsstring.CleanString(deadlineLoggingLine.Next().Text())
 
-	resultFrom, errFrom := time.Parse(DateLayout, deadlineLoggingFrom)
+	resultFrom := utils.Must(time.ParseInLocation(DateLayout, deadlineLoggingFrom, GetLocation()))
 
-	if errFrom != nil {
-		log.Fatal(errFrom)
-	}
-
-	resultTo, errTo := time.Parse(DateLayout, deadlineLoggingTo)
-
-	if errTo != nil {
-		log.Fatal(errTo)
-	}
+	resultTo := utils.Must(time.ParseInLocation(DateLayout, deadlineLoggingTo, GetLocation()))
 
 	return utilstime.TimeRange{From: resultFrom, To: resultTo}
 }
@@ -235,17 +215,9 @@ func extractDeadlineMaterialsUsage(doc *goquery.Selection) utilstime.TimeRange {
 
 	deadlineMaterialsUsageTo := utilsstring.CleanString(deadlineLoggingLine.Next().Text())
 
-	resultFrom, errFrom := time.Parse(DateLayout, deadlineMaterialsUsageFrom)
+	resultFrom := utils.Must(time.ParseInLocation(DateLayout, deadlineMaterialsUsageFrom, GetLocation()))
 
-	if errFrom != nil {
-		log.Fatal(errFrom)
-	}
-
-	resultTo, errTo := time.Parse(DateLayout, deadlineMaterialsUsageTo)
-
-	if errTo != nil {
-		log.Fatal(errTo)
-	}
+	resultTo := utils.Must(time.ParseInLocation(DateLayout, deadlineMaterialsUsageTo, GetLocation()))
 
 	return utilstime.TimeRange{From: resultFrom, To: resultTo}
 }
@@ -281,11 +253,7 @@ func extractWhoReceivedThePermit(doc *goquery.Selection) string {
 func extractIssuedOn(doc *goquery.Selection) time.Time {
 	issuedOnLine := doc.Find("td:contains('Дата:')").Find("b").Text()
 
-	issuedOn, err := time.Parse(DateLayout, utilsstring.CleanString(issuedOnLine))
-
-	if err != nil {
-		log.Fatal(err)
-	}
+	issuedOn := utils.Must(time.ParseInLocation(DateLayout, utilsstring.CleanString(issuedOnLine), GetLocation()))
 
 	return issuedOn
 }
@@ -355,11 +323,7 @@ func extractLoggingToExtension(doc *goquery.Selection) time.Time {
 
 	match := regex.FindStringSubmatch(cleanedLine)[1]
 
-	result, err := time.Parse(DateLayout, utilsstring.CleanString(match))
-
-	if err != nil {
-		log.Fatal(err)
-	}
+	result := utils.Must(time.ParseInLocation(DateLayout, utilsstring.CleanString(match), GetLocation()))
 
 	return result
 }
@@ -377,11 +341,7 @@ func extractMaterialsUsageToExtension(doc *goquery.Selection) time.Time {
 
 	match := regex.FindStringSubmatch(cleanedLine)[1]
 
-	result, err := time.Parse(DateLayout, utilsstring.CleanString(match))
-
-	if err != nil {
-		log.Fatal(err)
-	}
+	result := utils.Must(time.ParseInLocation(DateLayout, utilsstring.CleanString(match), GetLocation()))
 
 	return result
 }

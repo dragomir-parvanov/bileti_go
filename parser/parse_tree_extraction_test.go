@@ -6,8 +6,8 @@ parse_tree_extraction_test.html file for its tests
 package parser
 
 import (
+	"bileti_go/utils"
 	"github.com/PuerkitoBio/goquery"
-	"log"
 	"reflect"
 	"testing"
 )
@@ -61,11 +61,7 @@ func filter(extractions []TreeExtraction, f filterFunc) []TreeExtraction {
 func getTestSelection() *goquery.Selection {
 	testFile := GetTestFile(TestExtractionFileName)
 
-	doc, err := goquery.NewDocumentFromReader(testFile)
-
-	if err != nil {
-		log.Fatal(err)
-	}
+	doc := utils.Must(goquery.NewDocumentFromReader(testFile))
 
 	return doc.Find("body")
 }

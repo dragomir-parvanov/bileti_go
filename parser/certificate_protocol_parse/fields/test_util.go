@@ -1,17 +1,13 @@
 package certificate_protocol_parse_fields
 
 import (
+	"bileti_go/utils"
 	"github.com/PuerkitoBio/goquery"
-	"log"
 	"strings"
 )
 
 func GetTestSelection(html string) *goquery.Selection {
-	doc, err := goquery.NewDocumentFromReader(strings.NewReader(html))
-
-	if err != nil {
-		log.Fatal(err)
-	}
+	doc := utils.Must(goquery.NewDocumentFromReader(strings.NewReader(html)))
 
 	return doc.Selection
 }

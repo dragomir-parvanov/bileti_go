@@ -1,9 +1,9 @@
 package parser
 
 import (
+	"bileti_go/utils"
 	utilsstring "bileti_go/utils/string"
 	"github.com/PuerkitoBio/goquery"
-	"log"
 	"regexp"
 	"slices"
 	"strconv"
@@ -126,11 +126,7 @@ func parseFloat(str string) float64 {
 		return 0
 	}
 
-	parsedValue, err := strconv.ParseFloat(str, 64)
-
-	if err != nil {
-		log.Fatal(err)
-	}
+	parsedValue := utils.Must(strconv.ParseFloat(str, 64))
 
 	return parsedValue
 }
