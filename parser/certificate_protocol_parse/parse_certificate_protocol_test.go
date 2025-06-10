@@ -195,12 +195,13 @@ const html = `
 </body><grammarly-desktop-integration data-grammarly-shadow-root="true"></grammarly-desktop-integration></html>
 `
 
-func SkipTestShouldMatchObject(t *testing.T) {
+func TestShouldMatchObject(t *testing.T) {
 	actual := ParseCertificateProtocol(strings.NewReader(html))
 	expected := CertificateProtocolParseResult{
-		id:                      "0800519",
-		permittedForFellingId:   "0800703",
-		permittedForFellingDate: time.Date(2025, 8, 1, 0, 0, 0, 0, parser.GetLocation()),
+		id:                          "0800519",
+		regionalForestryDirectorate: "Варна",
+		permittedForFellingId:       "0800703",
+		permittedForFellingDate:     time.Date(2025, 1, 8, 0, 0, 0, 0, parser.GetLocation()),
 	}
 
 	if reflect.DeepEqual(actual, expected) == false {
