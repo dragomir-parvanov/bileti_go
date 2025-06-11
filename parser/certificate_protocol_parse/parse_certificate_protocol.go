@@ -28,5 +28,6 @@ func ParseCertificateProtocol(reader io.Reader) CertificateProtocolParseResult {
 		cadastreId:                  certificate_protocol_parse_fields.ExtractCadastreId(selection),
 		ownership:                   certificate_protocol_parse_fields.ExtractOwnership(selection),
 		areaOfPermit:                certificate_protocol_parse_fields.ExtractAreaOfPermit(selection),
+		areaDone:                    certificate_protocol_parse_fields.ExtractAreaDone(selection),
 	}
 }

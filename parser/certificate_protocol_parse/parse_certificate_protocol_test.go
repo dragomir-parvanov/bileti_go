@@ -60,7 +60,7 @@ const html = `
 </tr>
 <tr>
   <td align="left" colspan="2">Площ по позволително за сеч (ха): <b>0.090</b>&nbsp;&nbsp;|&nbsp;&nbsp;
-Сечта е проведена на площ (ха): <b>0.090</b></td>
+Сечта е проведена на площ (ха): <b>0.080</b></td>
 </tr>
 <tr><td colspan="2">
 	<table align="center" width="640" border="0" cellpadding="0" cellspacing="0" class="ex">
@@ -212,6 +212,7 @@ func TestShouldMatchObject(t *testing.T) {
 		cadastreId:                  "02508.62.38",
 		ownership:                   "ДГТ",
 		areaOfPermit:                0.09,
+		areaDone:                    0.08,
 	}
 
 	if reflect.DeepEqual(actual, expected) == false {
