@@ -161,7 +161,7 @@ const html = `
 </tr>
 <tr>
   <td colspan="2" align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>2.</b> При сечта и извоза на дървесина са допуснати следните нарушения на Закона за горите:&nbsp;
-  <b></b></td>
+  <b>Дарамдудай</b></td>
 </tr>
 <tr>
   <td align="left" colspan="2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>3.</b> Провеждането на сечта и почистването на сечището е извършено според определения начин в технологичния план и позволителното за сеч:
@@ -215,6 +215,7 @@ func TestShouldMatchObject(t *testing.T) {
 		areaDone:                    0.08,
 		notMarkedLoggedTreesExist:   true,
 		volumeDifferenceDescription: `Сечта е изведена по КП на РДГ Варна съставен за установяване на опасни дървета в имот 02508.62.38.Дървесината е негодна за употреба`,
+		violationDescription:        "Дарамдудай",
 	}
 
 	if reflect.DeepEqual(actual, expected) == false {

@@ -31,5 +31,6 @@ func ParseCertificateProtocol(reader io.Reader) CertificateProtocolParseResult {
 		areaDone:                    certificate_protocol_parse_fields.ExtractAreaDone(selection),
 		notMarkedLoggedTreesExist:   certificate_protocol_parse_fields.ExtractNotMarkedLoggedTreesExist(selection),
 		volumeDifferenceDescription: certificate_protocol_parse_fields.ExtractVolumeDifferenceDescription(selection),
+		violationDescription:        certificate_protocol_parse_fields.ExtractViolationDescription(selection),
 	}
 }
