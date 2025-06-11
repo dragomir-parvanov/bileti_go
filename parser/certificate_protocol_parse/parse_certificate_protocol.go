@@ -33,5 +33,6 @@ func ParseCertificateProtocol(reader io.Reader) CertificateProtocolParseResult {
 		volumeDifferenceDescription: certificate_protocol_parse_fields.ExtractVolumeDifferenceDescription(selection),
 		violationDescription:        certificate_protocol_parse_fields.ExtractViolationDescription(selection),
 		loggingFinishDescription:    certificate_protocol_parse_fields.ExtractLoggingFinishDescription(selection),
+		violationId:                 certificate_protocol_parse_fields.ExtractViolationId(selection),
 	}
 }

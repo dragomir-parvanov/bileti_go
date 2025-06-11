@@ -169,7 +169,7 @@ const html = `
 </td></tr>
 <tr>
   <td align="left" colspan="2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>4.</b> За допуснатите нарушения е съставен акт за установяване на административно<br> 
- нарушение № <b></b> / <b>&nbsp;</b>
+ нарушение № <b>1337</b> / <b>&nbsp;</b>
  на: <b></b>
 </td></tr>
 <tr>
@@ -217,6 +217,7 @@ func TestShouldMatchObject(t *testing.T) {
 		volumeDifferenceDescription: `Сечта е изведена по КП на РДГ Варна съставен за установяване на опасни дървета в имот 02508.62.38.Дървесината е негодна за употреба`,
 		violationDescription:        "Дарамдудай",
 		loggingFinishDescription:    "Задоволително",
+		violationId:                 "1337",
 	}
 
 	if reflect.DeepEqual(actual, expected) == false {
