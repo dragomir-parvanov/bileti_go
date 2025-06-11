@@ -16,10 +16,10 @@ type CertificateProtocolParseResult struct {
 	municipality                 string
 	land                         string
 	section                      string
-	subSection                   string
+	subsection                   string
 	cadastreId                   string
 	ownership                    string
-	areOfPermit                  float64
+	areaOfPermit                 float64
 	areaDone                     float64
 	loggedNotMarkedTrees         bool
 	volumeDifferenceDescription  string

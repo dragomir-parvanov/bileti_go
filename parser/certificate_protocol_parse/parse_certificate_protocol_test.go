@@ -206,6 +206,12 @@ func TestShouldMatchObject(t *testing.T) {
 		findingsRecordWitnessedBy:   "",
 		findingsRecordIssuedBy:      "",
 		municipality:                "Балчик",
+		land:                        "Балчик",
+		section:                     "53",
+		subsection:                  "10",
+		cadastreId:                  "02508.62.38",
+		ownership:                   "ДГТ",
+		areaOfPermit:                0.09,
 	}
 
 	if reflect.DeepEqual(actual, expected) == false {
