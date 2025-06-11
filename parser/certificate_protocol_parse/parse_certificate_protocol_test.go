@@ -214,6 +214,7 @@ func TestShouldMatchObject(t *testing.T) {
 		areaOfPermit:                0.09,
 		areaDone:                    0.08,
 		notMarkedLoggedTreesExist:   true,
+		volumeDifferenceDescription: `Сечта е изведена по КП на РДГ Варна съставен за установяване на опасни дървета в имот 02508.62.38.Дървесината е негодна за употреба`,
 	}
 
 	if reflect.DeepEqual(actual, expected) == false {
