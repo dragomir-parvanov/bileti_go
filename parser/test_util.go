@@ -2,12 +2,13 @@ package parser
 
 import (
 	"bileti_go/utils"
-	"io"
-	"os"
+	"github.com/PuerkitoBio/goquery"
+	"strings"
 )
 
-func GetTestFile(filePath string) io.Reader {
-	file := utils.Must(os.Open(filePath))
+func GetTestSelection(html string) *goquery.Selection {
 
-	return file
+	doc := utils.Must(goquery.NewDocumentFromReader(strings.NewReader(html)))
+
+	return doc.Find("body")
 }

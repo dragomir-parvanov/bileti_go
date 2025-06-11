@@ -1,22 +1,171 @@
-/**
-This test file is using the
-parse_bileti_test.html file for its tests
-*/
-
 package parser
 
 import (
+	"strings"
 	"testing"
 	"time"
 )
 
-const TestPermitFile = "parse_bileti_test.html"
+const html = `
+<body data-new-gr-c-s-check-loaded="14.1237.0" data-gr-ext-installed="">
+<table width="650" align="center" border="0" summary="" class="sech">
+    <tbody><tr>
+        <td rowspan="2" align="center" width="80" height="53"><img src="/images/logo.png"></td>
+        <td align="center"><font size="+1">ИЗПЪЛНИТЕЛНА АГЕНЦИЯ ПО ГОРИТЕ</font></td>
+    </tr>
+    <tr>
+        <td colspan="2" align="center"><font size="2px">Регионална дирекция по горите <b>Бургас</b></font></td>
+    </tr>
+    <tr>
+        <td colspan="2" align="center"><hr></td>
+    </tr>
+    </tbody></table>
+<table border="0" align="center" width="650" cellpadding="0" cellspacing="8" class="sech">
+    <tbody><tr>
+        <td colspan="2" align="left">ВИД НА СЕЧТА : <b>В сервитути&nbsp;</b>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2" align="center"><br><font size="2"><b>ПОЗВОЛИТЕЛНО за СЕЧ № 0805138</b>
+        </font></td>
+    </tr>
+    <tr>
+        <td colspan="2" align="left"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;На основание чл. 108 от Закона за горите, Заповед № <b>127/18.02.2021</b> г. за утвърждаване на
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2" align="left">горскостопански план (горскостопанска програма)</td>
+    </tr>
+    <tr>
+        <td colspan="2" align="left">разрешава се на <b>ЕЛЕКТРОЕНЕРГИЕН СИСТЕМЕН ОПЕРАТОР  ЕАД</b></td>
+    </tr>
+    <tr>
+        <td colspan="2" align="left">с нает регистриран лесовъд &nbsp;<b>Регистриран лесовъд</b> , </td>
+    </tr>
+    <tr>
+        <td colspan="2" align="left">да извърши добива в отдел № <b>450</b>; подотдел <b>1</b>; имот с (кадастрален/КВС) № <b>тестов кадастрален номер</b>, находящ се в: </td>
+    </tr>
+    <tr>
+        <td colspan="2" align="left">Община <b>Айтос</b>; Землище <b>Айтос землище</b> площно сечище от <b>2.200</b> хектара; Вид собственост : <b>ДГТ</b></td>
+    </tr>
+    <tr>
+        <td colspan="2" align="left"> Дърветата са маркирани от <b>Тестов Маркировач</b></td>
+    </tr>
+    <tr>
+        <td colspan="2" align="left"> с контролна горска марка № <b>Б 1401</b>, с <b>оранжева</b> боя, дата на карнет опис: <b>&nbsp;</b> г.</td>
+    </tr>
+    <tr>
+        <td colspan="2" align="left"> Очакваният добив е <b>1.0</b> плътни кубически метра лежаща маса, която по категории е както следва :</td>
+    </tr>
+    </tbody></table>
+<table align="center" width="640" border="0" cellpadding="0" cellspacing="0" class="ex">
+    <tbody><tr>
+        <td align="center" width="20">№</td>
+        <td align="center" width="200">Категория дървесина</td>
+        <td align="center" width="90">Дървесен вид</td>
+        <td align="center" width="50">куб. м. </td>
+        <td align="center">Забележка </td>
+    </tr>
+    <tr>
+        <td rowspan="1" align="center">1.</td>
+        <td rowspan="1">&nbsp;Едра строителна дървесина</td>
+        <td><b> --- </b></td>
+        <td align="right"><b> --- </b></td>
+        <td align="center"><font size="1"></font></td>
+    </tr>
+    <tr>
+        <td rowspan="1" align="center">2.</td>
+        <td rowspan="1">&nbsp;Средна строителна дървесина</td>
+        <td><b> --- </b></td>
+        <td align="right"><b> --- </b></td>
+        <td align="center"><font size="1"></font></td>
+    </tr>
+    <tr>
+        <td rowspan="1" align="center">3.</td>
+        <td rowspan="1">&nbsp;Дребна строителна дървесина</td>
+        <td><b> --- </b></td>
+        <td align="right"><b> --- </b></td>
+        <td align="center"><font size="1"></font></td>
+    </tr>
+    <tr>
+        <td rowspan="1" align="center">4.</td>
+        <td rowspan="1">&nbsp;Дърва</td>
+        <td><b> --- </b></td>
+        <td align="right"><b> --- </b></td>
+        <td align="center"><font size="1"></font></td>
+    </tr>
+    <tr>
+        <td rowspan="1" align="center">5.</td>
+        <td rowspan="1">&nbsp;Вършина</td>
+        <td><b>Келяв габър</b></td>
+        <td align="right"><b>1.0</b></td>
+        <td align="center"><font size="1"></font></td>
+    </tr>
+    </tbody></table>
+<table border="0" align="center" width="650" cellpadding="0" cellspacing="8" class="sech">
+    <tbody><tr>
+        <td colspan="2" align="left"> Допълнителни изисквания при провеждане на сечта : <b>Позволителното за сеч се издава за почистване в сервитут на електропровод без материален добив.</b></td>
+    </tr>
+    <tr>
+        <td colspan="2" align="left"> Срок за провеждане на сечта от <b>27.01.2025</b>&nbsp;г. до <b>31.12.2025</b>&nbsp;г. </td>
+    </tr>
+    <tr>
+        <td colspan="2" align="left"> Срок за извозване на материалите от сечището от <b>27.01.2025</b>&nbsp;г. до <b>31.12.2025</b>&nbsp;г. </td>
+    </tr>
+    <tr>
+        <td colspan="2" align="left"> Начин на почистване на сечището : <b>Тестово почистване</b></td>
+    </tr>
+    <tr>
+        <td colspan="2" align="left"> Материалите ще се извозят до временен склад : <b>съгласно ТП</b></td>
+    </tr>
+    <tr>
+        <td colspan="2">&nbsp;</td>
+    </tr>
+    <tr>
+        <td align="left" width="315">Издал:Издал човек</td>
+        <td align="left" width="335">Получил позволителното:Получил човек</td>
+    </tr>
+    <tr>
+        <td align="left" width="325">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/<b> .......... </b>/</td>
+        <td align="left" width="325">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/<b> .......... </b>/</td>
+    </tr>
+    <tr>
+        <td colspan="2" align="left"> Дата: <b>24.01.2025</b> г.
+            &nbsp;&nbsp;Издал служител : |Служител|
+            &nbsp;&nbsp;Код: |Някакъв код|</td>
+    </tr>
+    <tr>
+        <td>Място на издаване на позволителното за сеч:</td>	</tr>
+    <tr>
+        <td colspan="2" align="left">Област <b>Бургас</b>, община <b>Айтос</b>, землище <b>Айтос</b>, адрес Някакъв адрес, подотдел Някакъв подотдел, GPS координати: Някакви кординати</td>
+    </tr>
+    <tr>
+        <td colspan="2"><b><b></b></b></td>
+    </tr>
+    <tr>
+        <td colspan="2" align="center"><b>ЗАВЕРКИ ПРИ ПРОДЪЛЖАВАНЕ СРОКОВЕТЕ ЗА СЕЧ И ИЗВОЗ</b></td>
+    </tr>
+    <tr>
+        <td align="left"> За провеждане на сечта до : 27.02.2025 г.</td>
+        <td align="left"> За извоз на материалите до : 28.02.2025 г.</td>
+    </tr>
+    <tr>
+        <td colspan="2" align="left">Издал:  Удължителен Човек</td>
+    </tr>
+    <tr>
+        <td colspan="2" align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/</td>
+    </tr>
+    <tr>
+        <td colspan="2" align="left">Продължаване на сроковете за сеч и извоз става само чрез информационната система на ИАГ.</td>
+    </tr>
+    </tbody></table>
+</body>
+`
 
 func TestShouldReturnId(t *testing.T) {
-
-	testFile := GetTestFile(TestPermitFile)
-
-	result := ParsePermittedForFellingHTML(testFile).id
+	result := ParsePermittedForFellingHTML(strings.NewReader(html)).id
 
 	expected := "0805138"
 
@@ -26,9 +175,7 @@ func TestShouldReturnId(t *testing.T) {
 }
 
 func TestShouldReturnRegionalForestryDirectorate(t *testing.T) {
-	testFile := GetTestFile(TestPermitFile)
-
-	result := ParsePermittedForFellingHTML(testFile).regionalForestryDirectorate
+	result := ParsePermittedForFellingHTML(strings.NewReader(html)).regionalForestryDirectorate
 
 	expected := "Бургас"
 
@@ -38,10 +185,7 @@ func TestShouldReturnRegionalForestryDirectorate(t *testing.T) {
 }
 
 func TestShouldReturnDirectiveNumber(t *testing.T) {
-
-	testFile := GetTestFile(TestPermitFile)
-
-	result := ParsePermittedForFellingHTML(testFile).directiveNumber
+	result := ParsePermittedForFellingHTML(strings.NewReader(html)).directiveNumber
 
 	expected := "127/18.02.2021"
 
@@ -51,10 +195,7 @@ func TestShouldReturnDirectiveNumber(t *testing.T) {
 }
 
 func TestShouldReturnPermittedFor(t *testing.T) {
-
-	testFile := GetTestFile(TestPermitFile)
-
-	result := ParsePermittedForFellingHTML(testFile).permittedFor
+	result := ParsePermittedForFellingHTML(strings.NewReader(html)).permittedFor
 
 	expected := "ЕЛЕКТРОЕНЕРГИЕН СИСТЕМЕН ОПЕРАТОР ЕАД"
 
@@ -64,10 +205,7 @@ func TestShouldReturnPermittedFor(t *testing.T) {
 }
 
 func TestShouldReturnAllowedForester(t *testing.T) {
-
-	testFile := GetTestFile(TestPermitFile)
-
-	result := ParsePermittedForFellingHTML(testFile).allowedForester
+	result := ParsePermittedForFellingHTML(strings.NewReader(html)).allowedForester
 
 	expected := "Регистриран лесовъд"
 
@@ -77,10 +215,7 @@ func TestShouldReturnAllowedForester(t *testing.T) {
 }
 
 func TestShouldReturnTypeOfFelling(t *testing.T) {
-
-	testFile := GetTestFile(TestPermitFile)
-
-	result := ParsePermittedForFellingHTML(testFile).typeOfFelling
+	result := ParsePermittedForFellingHTML(strings.NewReader(html)).typeOfFelling
 
 	expected := "В сервитути"
 
@@ -90,10 +225,7 @@ func TestShouldReturnTypeOfFelling(t *testing.T) {
 }
 
 func TestShouldReturnSection(t *testing.T) {
-
-	testFile := GetTestFile(TestPermitFile)
-
-	result := ParsePermittedForFellingHTML(testFile).section
+	result := ParsePermittedForFellingHTML(strings.NewReader(html)).section
 
 	expected := "450"
 
@@ -103,10 +235,7 @@ func TestShouldReturnSection(t *testing.T) {
 }
 
 func TestShouldReturnSubSection(t *testing.T) {
-
-	testFile := GetTestFile(TestPermitFile)
-
-	result := ParsePermittedForFellingHTML(testFile).subSection
+	result := ParsePermittedForFellingHTML(strings.NewReader(html)).subSection
 
 	expected := "1"
 
@@ -116,10 +245,7 @@ func TestShouldReturnSubSection(t *testing.T) {
 }
 
 func TestShouldReturnCadastreId(t *testing.T) {
-
-	testFile := GetTestFile(TestPermitFile)
-
-	result := ParsePermittedForFellingHTML(testFile).cadastreId
+	result := ParsePermittedForFellingHTML(strings.NewReader(html)).cadastreId
 
 	expected := "тестов кадастрален номер"
 
@@ -129,10 +255,7 @@ func TestShouldReturnCadastreId(t *testing.T) {
 }
 
 func TestShouldReturnMunicipality(t *testing.T) {
-
-	testFile := GetTestFile(TestPermitFile)
-
-	result := ParsePermittedForFellingHTML(testFile).municipality
+	result := ParsePermittedForFellingHTML(strings.NewReader(html)).municipality
 
 	expected := "Айтос"
 
@@ -142,10 +265,7 @@ func TestShouldReturnMunicipality(t *testing.T) {
 }
 
 func TestShouldReturnLand(t *testing.T) {
-
-	testFile := GetTestFile(TestPermitFile)
-
-	result := ParsePermittedForFellingHTML(testFile).land
+	result := ParsePermittedForFellingHTML(strings.NewReader(html)).land
 
 	expected := "Айтос землище"
 
@@ -155,9 +275,7 @@ func TestShouldReturnLand(t *testing.T) {
 }
 
 func TestShouldReturnAreaClearing(t *testing.T) {
-	testFile := GetTestFile(TestPermitFile)
-
-	result := ParsePermittedForFellingHTML(testFile).areaClearing
+	result := ParsePermittedForFellingHTML(strings.NewReader(html)).areaClearing
 
 	expected := 2.2
 
@@ -167,9 +285,7 @@ func TestShouldReturnAreaClearing(t *testing.T) {
 }
 
 func TestShouldReturnOwnershipType(t *testing.T) {
-	testFile := GetTestFile(TestPermitFile)
-
-	result := ParsePermittedForFellingHTML(testFile).ownershipType
+	result := ParsePermittedForFellingHTML(strings.NewReader(html)).ownershipType
 
 	expected := "ДГТ"
 
@@ -179,9 +295,7 @@ func TestShouldReturnOwnershipType(t *testing.T) {
 }
 
 func TestShouldReturnTreesMarkedBy(t *testing.T) {
-	testFile := GetTestFile(TestPermitFile)
-
-	result := ParsePermittedForFellingHTML(testFile).treesMarkedBy
+	result := ParsePermittedForFellingHTML(strings.NewReader(html)).treesMarkedBy
 
 	expected := "Тестов Маркировач"
 
@@ -191,9 +305,7 @@ func TestShouldReturnTreesMarkedBy(t *testing.T) {
 }
 
 func TestShouldReturnControlMarkNumber(t *testing.T) {
-	testFile := GetTestFile(TestPermitFile)
-
-	result := ParsePermittedForFellingHTML(testFile).controlMarkNumber
+	result := ParsePermittedForFellingHTML(strings.NewReader(html)).controlMarkNumber
 
 	expected := "Б 1401"
 
@@ -203,9 +315,7 @@ func TestShouldReturnControlMarkNumber(t *testing.T) {
 }
 
 func TestShouldReturnMarkColor(t *testing.T) {
-	testFile := GetTestFile(TestPermitFile)
-
-	result := ParsePermittedForFellingHTML(testFile).controlMarkColor
+	result := ParsePermittedForFellingHTML(strings.NewReader(html)).controlMarkColor
 
 	expected := "оранжева"
 
@@ -215,9 +325,7 @@ func TestShouldReturnMarkColor(t *testing.T) {
 }
 
 func TestShouldReturnDateOfCarnetInventory(t *testing.T) {
-	testFile := GetTestFile(TestPermitFile)
-
-	result := ParsePermittedForFellingHTML(testFile).dateOfCarnetInventory
+	result := ParsePermittedForFellingHTML(strings.NewReader(html)).dateOfCarnetInventory
 
 	expected := time.Time{}
 
@@ -227,9 +335,7 @@ func TestShouldReturnDateOfCarnetInventory(t *testing.T) {
 }
 
 func TestShouldReturnExpectedTreeExtraction(t *testing.T) {
-	testFile := GetTestFile(TestPermitFile)
-
-	result := ParsePermittedForFellingHTML(testFile).expectedTreeExtraction
+	result := ParsePermittedForFellingHTML(strings.NewReader(html)).expectedTreeExtraction
 
 	expected := 1.0
 
@@ -239,9 +345,7 @@ func TestShouldReturnExpectedTreeExtraction(t *testing.T) {
 }
 
 func TestShouldReturnAdditionalRequirements(t *testing.T) {
-	testFile := GetTestFile(TestPermitFile)
-
-	result := ParsePermittedForFellingHTML(testFile).additionalRequirements
+	result := ParsePermittedForFellingHTML(strings.NewReader(html)).additionalRequirements
 
 	expected := "Позволителното за сеч се издава за почистване в сервитут на електропровод без материален добив."
 
@@ -252,9 +356,7 @@ func TestShouldReturnAdditionalRequirements(t *testing.T) {
 }
 
 func TestShouldReturnDeadlineLoggingFrom(t *testing.T) {
-	testFile := GetTestFile(TestPermitFile)
-
-	result := ParsePermittedForFellingHTML(testFile).deadlineLogging.From
+	result := ParsePermittedForFellingHTML(strings.NewReader(html)).deadlineLogging.From
 
 	expected := time.Date(2025, 1, 27, 0, 0, 0, 0, GetLocation())
 
@@ -264,9 +366,7 @@ func TestShouldReturnDeadlineLoggingFrom(t *testing.T) {
 }
 
 func TestShouldReturnDeadlineLoggingTo(t *testing.T) {
-	testFile := GetTestFile(TestPermitFile)
-
-	result := ParsePermittedForFellingHTML(testFile).deadlineLogging.To
+	result := ParsePermittedForFellingHTML(strings.NewReader(html)).deadlineLogging.To
 
 	expected := time.Date(2025, 12, 31, 0, 0, 0, 0, GetLocation())
 
@@ -276,9 +376,7 @@ func TestShouldReturnDeadlineLoggingTo(t *testing.T) {
 }
 
 func TestShouldReturnDeadlineMaterialsUsageFrom(t *testing.T) {
-	testFile := GetTestFile(TestPermitFile)
-
-	result := ParsePermittedForFellingHTML(testFile).deadlineMaterialsUsage.From
+	result := ParsePermittedForFellingHTML(strings.NewReader(html)).deadlineMaterialsUsage.From
 
 	expected := time.Date(2025, 1, 27, 0, 0, 0, 0, GetLocation())
 
@@ -288,9 +386,7 @@ func TestShouldReturnDeadlineMaterialsUsageFrom(t *testing.T) {
 }
 
 func TestShouldReturnDeadlineMaterialsUsageTo(t *testing.T) {
-	testFile := GetTestFile(TestPermitFile)
-
-	result := ParsePermittedForFellingHTML(testFile).deadlineMaterialsUsage.To
+	result := ParsePermittedForFellingHTML(strings.NewReader(html)).deadlineMaterialsUsage.To
 
 	expected := time.Date(2025, 12, 31, 0, 0, 0, 0, GetLocation())
 
@@ -300,9 +396,7 @@ func TestShouldReturnDeadlineMaterialsUsageTo(t *testing.T) {
 }
 
 func TestShouldReturnCleaningProcedure(t *testing.T) {
-	testFile := GetTestFile(TestPermitFile)
-
-	result := ParsePermittedForFellingHTML(testFile).cleaningProcedure
+	result := ParsePermittedForFellingHTML(strings.NewReader(html)).cleaningProcedure
 
 	expected := "Тестово почистване"
 
@@ -312,9 +406,7 @@ func TestShouldReturnCleaningProcedure(t *testing.T) {
 }
 
 func TestShouldReturnRemovalToTemporaryStorage(t *testing.T) {
-	testFile := GetTestFile(TestPermitFile)
-
-	result := ParsePermittedForFellingHTML(testFile).removalToTemporaryStorage
+	result := ParsePermittedForFellingHTML(strings.NewReader(html)).removalToTemporaryStorage
 
 	expected := "съгласно ТП"
 
@@ -324,9 +416,7 @@ func TestShouldReturnRemovalToTemporaryStorage(t *testing.T) {
 }
 
 func TestShouldReturnIssuedBy(t *testing.T) {
-	testFile := GetTestFile(TestPermitFile)
-
-	result := ParsePermittedForFellingHTML(testFile).issuedBy
+	result := ParsePermittedForFellingHTML(strings.NewReader(html)).issuedBy
 
 	expected := "Издал човек"
 
@@ -336,9 +426,7 @@ func TestShouldReturnIssuedBy(t *testing.T) {
 }
 
 func TestShouldReturnWhoReceivedThePermit(t *testing.T) {
-	testFile := GetTestFile(TestPermitFile)
-
-	result := ParsePermittedForFellingHTML(testFile).whoReceivedThePermit
+	result := ParsePermittedForFellingHTML(strings.NewReader(html)).whoReceivedThePermit
 
 	expected := "Получил човек"
 
@@ -348,9 +436,7 @@ func TestShouldReturnWhoReceivedThePermit(t *testing.T) {
 }
 
 func TestShouldReturnIssuedOn(t *testing.T) {
-	testFile := GetTestFile(TestPermitFile)
-
-	result := ParsePermittedForFellingHTML(testFile).issuedOn
+	result := ParsePermittedForFellingHTML(strings.NewReader(html)).issuedOn
 
 	expected := time.Date(2025, 1, 24, 0, 0, 0, 0, GetLocation())
 
@@ -360,9 +446,7 @@ func TestShouldReturnIssuedOn(t *testing.T) {
 }
 
 func TestShouldReturnIssuedByEmployee(t *testing.T) {
-	testFile := GetTestFile(TestPermitFile)
-
-	result := ParsePermittedForFellingHTML(testFile).issuedByEmployee
+	result := ParsePermittedForFellingHTML(strings.NewReader(html)).issuedByEmployee
 
 	expected := "Служител"
 
@@ -372,9 +456,7 @@ func TestShouldReturnIssuedByEmployee(t *testing.T) {
 }
 
 func TestShouldReturnIssuedCode(t *testing.T) {
-	testFile := GetTestFile(TestPermitFile)
-
-	result := ParsePermittedForFellingHTML(testFile).issuedCode
+	result := ParsePermittedForFellingHTML(strings.NewReader(html)).issuedCode
 
 	expected := "Някакъв код"
 
@@ -384,9 +466,8 @@ func TestShouldReturnIssuedCode(t *testing.T) {
 }
 
 func TestShouldReturnPermitIssueRegion(t *testing.T) {
-	testFile := GetTestFile(TestPermitFile)
 
-	result := ParsePermittedForFellingHTML(testFile).permitIssuePlace.region
+	result := ParsePermittedForFellingHTML(strings.NewReader(html)).permitIssuePlace.region
 
 	expected := "Бургас"
 
@@ -396,9 +477,7 @@ func TestShouldReturnPermitIssueRegion(t *testing.T) {
 }
 
 func TestShouldReturnPermitIssueMunicipality(t *testing.T) {
-	testFile := GetTestFile(TestPermitFile)
-
-	result := ParsePermittedForFellingHTML(testFile).permitIssuePlace.municipality
+	result := ParsePermittedForFellingHTML(strings.NewReader(html)).permitIssuePlace.municipality
 
 	expected := "Айтос"
 
@@ -408,9 +487,7 @@ func TestShouldReturnPermitIssueMunicipality(t *testing.T) {
 }
 
 func TestShouldReturnPermitIssueLand(t *testing.T) {
-	testFile := GetTestFile(TestPermitFile)
-
-	result := ParsePermittedForFellingHTML(testFile).permitIssuePlace.land
+	result := ParsePermittedForFellingHTML(strings.NewReader(html)).permitIssuePlace.land
 
 	expected := "Айтос"
 
@@ -420,9 +497,7 @@ func TestShouldReturnPermitIssueLand(t *testing.T) {
 }
 
 func TestShouldReturnPermitIssueAddress(t *testing.T) {
-	testFile := GetTestFile(TestPermitFile)
-
-	result := ParsePermittedForFellingHTML(testFile).permitIssuePlace.address
+	result := ParsePermittedForFellingHTML(strings.NewReader(html)).permitIssuePlace.address
 
 	expected := "Някакъв адрес"
 
@@ -432,9 +507,7 @@ func TestShouldReturnPermitIssueAddress(t *testing.T) {
 }
 
 func TestShouldReturnPermitIssueSubsection(t *testing.T) {
-	testFile := GetTestFile(TestPermitFile)
-
-	result := ParsePermittedForFellingHTML(testFile).permitIssuePlace.subSection
+	result := ParsePermittedForFellingHTML(strings.NewReader(html)).permitIssuePlace.subSection
 
 	expected := "Някакъв подотдел"
 
@@ -444,9 +517,7 @@ func TestShouldReturnPermitIssueSubsection(t *testing.T) {
 }
 
 func TestShouldReturnPermitIssueGpsCoordinates(t *testing.T) {
-	testFile := GetTestFile(TestPermitFile)
-
-	result := ParsePermittedForFellingHTML(testFile).permitIssuePlace.gpsCoordinates
+	result := ParsePermittedForFellingHTML(strings.NewReader(html)).permitIssuePlace.gpsCoordinates
 
 	expected := "Някакви кординати"
 
@@ -456,9 +527,8 @@ func TestShouldReturnPermitIssueGpsCoordinates(t *testing.T) {
 }
 
 func TestShouldReturnExtensionLoggingTo(t *testing.T) {
-	testFile := GetTestFile(TestPermitFile)
 
-	result := ParsePermittedForFellingHTML(testFile).extension.loggingTo
+	result := ParsePermittedForFellingHTML(strings.NewReader(html)).extension.loggingTo
 
 	expected := time.Date(2025, 2, 27, 0, 0, 0, 0, GetLocation())
 
@@ -468,9 +538,7 @@ func TestShouldReturnExtensionLoggingTo(t *testing.T) {
 }
 
 func TestShouldReturnExtensionMaterialsUsageTo(t *testing.T) {
-	testFile := GetTestFile(TestPermitFile)
-
-	result := ParsePermittedForFellingHTML(testFile).extension.materialsUsageTo
+	result := ParsePermittedForFellingHTML(strings.NewReader(html)).extension.materialsUsageTo
 
 	expected := time.Date(2025, 2, 28, 0, 0, 0, 0, GetLocation())
 
@@ -480,9 +548,7 @@ func TestShouldReturnExtensionMaterialsUsageTo(t *testing.T) {
 }
 
 func TestShouldReturnExtensionIssuedBy(t *testing.T) {
-	testFile := GetTestFile(TestPermitFile)
-
-	result := ParsePermittedForFellingHTML(testFile).extension.issuedBy
+	result := ParsePermittedForFellingHTML(strings.NewReader(html)).extension.issuedBy
 
 	expected := "Удължителен Човек"
 
@@ -492,9 +558,7 @@ func TestShouldReturnExtensionIssuedBy(t *testing.T) {
 }
 
 func TestShouldReturnExtraction(t *testing.T) {
-	testFile := GetTestFile(TestPermitFile)
-
-	result := ParsePermittedForFellingHTML(testFile).extraction
+	result := ParsePermittedForFellingHTML(strings.NewReader(html)).extraction
 
 	if len(result) != 1 {
 		t.Errorf("Got %v, expected 1", len(result))
