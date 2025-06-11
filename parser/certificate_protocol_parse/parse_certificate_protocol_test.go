@@ -170,7 +170,7 @@ const html = `
 <tr>
   <td align="left" colspan="2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>4.</b> За допуснатите нарушения е съставен акт за установяване на административно<br> 
  нарушение № <b>1337</b> / <b>&nbsp;</b>
- на: <b></b>
+ на: <b>Иван Петков</b>
 </td></tr>
 <tr>
   <td align="left" colspan="2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>5.</b> За подобряване състоянието на насаждението в срок до: 
@@ -218,6 +218,7 @@ func TestShouldMatchObject(t *testing.T) {
 		violationDescription:        "Дарамдудай",
 		loggingFinishDescription:    "Задоволително",
 		violationId:                 "1337",
+		violationRecipient:          "Иван Петков",
 	}
 
 	if reflect.DeepEqual(actual, expected) == false {
