@@ -29,5 +29,6 @@ func ParseCertificateProtocol(reader io.Reader) CertificateProtocolParseResult {
 		ownership:                   certificate_protocol_parse_fields.ExtractOwnership(selection),
 		areaOfPermit:                certificate_protocol_parse_fields.ExtractAreaOfPermit(selection),
 		areaDone:                    certificate_protocol_parse_fields.ExtractAreaDone(selection),
+		notMarkedLoggedTreesExist:   certificate_protocol_parse_fields.ExtractNotMarkedLoggedTreesExist(selection),
 	}
 }

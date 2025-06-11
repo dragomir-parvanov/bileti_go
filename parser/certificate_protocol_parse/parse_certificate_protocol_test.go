@@ -153,7 +153,7 @@ const html = `
 </td></tr>
 <tr>
   <td align="left" colspan="2">Налични неотсечени маркирани стъбла : 
-<b>Не</b></td>
+<b>Да</b></td>
 </tr>
 <tr>
   <td colspan="2" align="left">Разликите между количествата и категориите дървесина, по позволително за сеч и фактически добити в повече или в по-малко се дължът на следното:&nbsp;
@@ -213,6 +213,7 @@ func TestShouldMatchObject(t *testing.T) {
 		ownership:                   "ДГТ",
 		areaOfPermit:                0.09,
 		areaDone:                    0.08,
+		notMarkedLoggedTreesExist:   true,
 	}
 
 	if reflect.DeepEqual(actual, expected) == false {

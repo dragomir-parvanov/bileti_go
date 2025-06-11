@@ -21,7 +21,7 @@ type CertificateProtocolParseResult struct {
 	ownership                    string
 	areaOfPermit                 float64
 	areaDone                     float64
-	loggedNotMarkedTrees         bool
+	notMarkedLoggedTreesExist    bool
 	volumeDifferenceDescription  string
 	violationDescription         string
 	loggingFinishDescription     string
