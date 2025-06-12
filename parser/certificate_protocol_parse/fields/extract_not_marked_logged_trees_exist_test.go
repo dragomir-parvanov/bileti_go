@@ -41,3 +41,22 @@ func TestShouldReturnTrueOnDa(t *testing.T) {
 		t.Errorf("Should return section '%v' but got '%v'", expected, actual)
 	}
 }
+
+func TestShouldPanicOnOtherTypeOfAnswer(t *testing.T) {
+	html := `
+	<table>
+		<tr>
+		  <td align="left" colspan="2">Налични неотсечени маркирани стъбла : 
+		<b>Some other random answer</b></td>
+		</tr>
+	</table>
+`
+
+	defer func() {
+		if r := recover(); r == nil {
+			t.Errorf("The code did not panic")
+		}
+	}()
+
+	ExtractNotMarkedLoggedTreesExist(GetTestSelection(html))
+}
