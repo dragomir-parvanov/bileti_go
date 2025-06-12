@@ -1,7 +1,7 @@
 package certificate_protocol_parse
 
 import (
-	"bileti_go/parser"
+	parser_extraction_category "bileti_go/parser/extraction_category"
 	"bileti_go/utils"
 	utilsstring "bileti_go/utils/string"
 	"github.com/PuerkitoBio/goquery"
@@ -51,20 +51,20 @@ func cleanStrings(strings []string) []string {
 	return cleanedStrings
 }
 
-func getSplitStrings() map[parser.ExtractionCategory][]string {
-	return map[parser.ExtractionCategory][]string{
-		parser.LargeConstructionTimber:  make([]string, 0),
-		parser.MediumConstructionTimber: make([]string, 0),
-		parser.SmallConstructionTimber:  make([]string, 0),
-		parser.Wood:                     make([]string, 0),
-		parser.TopHamper:                make([]string, 0),
+func getSplitStrings() map[parser_extraction_category.ExtractionCategory][]string {
+	return map[parser_extraction_category.ExtractionCategory][]string{
+		parser_extraction_category.LargeConstructionTimber:  make([]string, 0),
+		parser_extraction_category.MediumConstructionTimber: make([]string, 0),
+		parser_extraction_category.SmallConstructionTimber:  make([]string, 0),
+		parser_extraction_category.Wood:                     make([]string, 0),
+		parser_extraction_category.TopHamper:                make([]string, 0),
 	}
 }
 
-func getCategorizedStrings(strings []string) map[parser.ExtractionCategory][]string {
+func getCategorizedStrings(strings []string) map[parser_extraction_category.ExtractionCategory][]string {
 	splitStrings := getSplitStrings()
 
-	var activeCategory parser.ExtractionCategory
+	var activeCategory parser_extraction_category.ExtractionCategory
 
 	for i, str := range strings {
 		if i == 0 {
@@ -78,7 +78,7 @@ func getCategorizedStrings(strings []string) map[parser.ExtractionCategory][]str
 		_isSeparator := isSeparator(str, strings[i-1])
 
 		if _isSeparator {
-			activeCategory = getReverseMap()[str]
+			activeCategory = parser_extraction_category.GetReverseMap()[str]
 			continue
 		}
 
@@ -92,7 +92,7 @@ func getCategorizedStrings(strings []string) map[parser.ExtractionCategory][]str
 
 const columnsNumber = 5
 
-func extractExtractions(categorizedStrings map[parser.ExtractionCategory][]string) []CertificateProtocolTreeExtraction {
+func extractExtractions(categorizedStrings map[parser_extraction_category.ExtractionCategory][]string) []CertificateProtocolTreeExtraction {
 	var extractions []CertificateProtocolTreeExtraction
 
 	for k, categoryStrings := range categorizedStrings {
@@ -118,7 +118,7 @@ func isEmptyCategory(strings []string) bool {
 	return areAllEmpty
 }
 
-func makeTreeExtraction(category parser.ExtractionCategory, chunk []string) CertificateProtocolTreeExtraction {
+func makeTreeExtraction(category parser_extraction_category.ExtractionCategory, chunk []string) CertificateProtocolTreeExtraction {
 
 	return CertificateProtocolTreeExtraction{
 		category:                    category,
@@ -142,7 +142,7 @@ func parseFloat(str string) float64 {
 
 func isSeparator(str string, prevString string) bool {
 
-	if getReverseMap()[str] != "" {
+	if parser_extraction_category.GetReverseMap()[str] != "" {
 		return isNumberSeparator(prevString)
 	}
 
@@ -155,28 +155,4 @@ func isNumberSeparator(str string) bool {
 	isMatch := regex.MatchString(str)
 
 	return isMatch
-}
-
-func getMap() map[parser.ExtractionCategory]string {
-	categoryMap := map[parser.ExtractionCategory]string{
-		parser.LargeConstructionTimber:  "Едра строителна дървесина",
-		parser.MediumConstructionTimber: "Средна строителна дървесина",
-		parser.SmallConstructionTimber:  "Дребна строителна дървесина",
-		parser.Wood:                     "Дърва",
-		parser.TopHamper:                "Вършина",
-	}
-
-	return categoryMap
-}
-
-func getReverseMap() map[string]parser.ExtractionCategory {
-	categoryMap := getMap()
-
-	reversedMap := make(map[string]parser.ExtractionCategory)
-
-	for k, v := range categoryMap {
-		reversedMap[v] = k
-	}
-
-	return reversedMap
 }

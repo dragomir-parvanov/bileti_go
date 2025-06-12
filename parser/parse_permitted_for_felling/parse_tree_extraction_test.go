@@ -1,6 +1,7 @@
-package parser
+package parse_permitted_for_felling
 
 import (
+	"bileti_go/parser/extraction_category"
 	"bileti_go/utils"
 	"github.com/PuerkitoBio/goquery"
 	"reflect"
@@ -256,7 +257,7 @@ func TestShouldReturnNoLargeConstructionExtraction(t *testing.T) {
 	actual := ParseTreeExtraction(selection)
 
 	largeConstruction := filter(actual, func(extraction TreeExtraction) bool {
-		return extraction.category == LargeConstructionTimber
+		return extraction.category == parser_extraction_category.LargeConstructionTimber
 	})
 
 	if len(largeConstruction) != 0 {
@@ -270,7 +271,7 @@ func TestShouldReturnNoMediumExtraction(t *testing.T) {
 	actual := ParseTreeExtraction(selection)
 
 	mediumConstruction := filter(actual, func(extraction TreeExtraction) bool {
-		return extraction.category == MediumConstructionTimber
+		return extraction.category == parser_extraction_category.MediumConstructionTimber
 	})
 
 	if len(mediumConstruction) != 0 {
@@ -284,7 +285,7 @@ func TestShouldReturnNoSmallExtraction(t *testing.T) {
 	actual := ParseTreeExtraction(selection)
 
 	smallConstruction := filter(actual, func(extraction TreeExtraction) bool {
-		return extraction.category == SmallConstructionTimber
+		return extraction.category == parser_extraction_category.SmallConstructionTimber
 	})
 
 	if len(smallConstruction) != 0 {
@@ -298,7 +299,7 @@ func TestShouldReturnWoodTreeTypes(t *testing.T) {
 	actual := ParseTreeExtraction(selection)
 
 	wood := filter(actual, func(extraction TreeExtraction) bool {
-		return extraction.category == Wood
+		return extraction.category == parser_extraction_category.Wood
 	})
 
 	names := extractTreeNames(wood)
@@ -316,7 +317,7 @@ func TestShouldReturnWoodValues(t *testing.T) {
 	actual := ParseTreeExtraction(selection)
 
 	wood := filter(actual, func(extraction TreeExtraction) bool {
-		return extraction.category == Wood
+		return extraction.category == parser_extraction_category.Wood
 	})
 
 	values := extractWoodValues(wood)
@@ -334,7 +335,7 @@ func TestShouldReturnWoodNotes(t *testing.T) {
 	actual := ParseTreeExtraction(selection)
 
 	wood := filter(actual, func(extraction TreeExtraction) bool {
-		return extraction.category == Wood
+		return extraction.category == parser_extraction_category.Wood
 	})
 
 	notes := extractWoodNotes(wood)

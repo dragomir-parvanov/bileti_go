@@ -1,8 +1,8 @@
 package certificate_protocol_parse
 
 import (
-	"bileti_go/parser"
 	certificate_protocol_parse_fields "bileti_go/parser/certificate_protocol_parse/fields"
+	parser_extraction_category "bileti_go/parser/extraction_category"
 	"reflect"
 	"testing"
 )
@@ -102,10 +102,10 @@ func TestShouldReturnTreeExtraction(t *testing.T) {
 	actual := ExtractExtraction(certificate_protocol_parse_fields.GetTestSelection(treeExtractionHtml))
 
 	expected := []CertificateProtocolTreeExtraction{
-		{category: parser.Wood, treeType: "Ясен", byLoggingPermitCollected: 0, actuallyCollected: 0, availableInTheClearing: 0, availableInTemporaryStorage: 0},
-		{category: parser.Wood, treeType: "Други широколистни", byLoggingPermitCollected: 0.1, actuallyCollected: 0, availableInTheClearing: 0, availableInTemporaryStorage: 0},
-		{category: parser.Wood, treeType: "Айлант", byLoggingPermitCollected: 0.1, actuallyCollected: 0, availableInTheClearing: 0, availableInTemporaryStorage: 0},
-		{category: parser.Wood, treeType: "Джанка", byLoggingPermitCollected: 0.3, actuallyCollected: 0, availableInTheClearing: 0, availableInTemporaryStorage: 0},
+		{category: parser_extraction_category.Wood, treeType: "Ясен", byLoggingPermitCollected: 0, actuallyCollected: 0, availableInTheClearing: 0, availableInTemporaryStorage: 0},
+		{category: parser_extraction_category.Wood, treeType: "Други широколистни", byLoggingPermitCollected: 0.1, actuallyCollected: 0, availableInTheClearing: 0, availableInTemporaryStorage: 0},
+		{category: parser_extraction_category.Wood, treeType: "Айлант", byLoggingPermitCollected: 0.1, actuallyCollected: 0, availableInTheClearing: 0, availableInTemporaryStorage: 0},
+		{category: parser_extraction_category.Wood, treeType: "Джанка", byLoggingPermitCollected: 0.3, actuallyCollected: 0, availableInTheClearing: 0, availableInTemporaryStorage: 0},
 	}
 
 	if !reflect.DeepEqual(actual, expected) {

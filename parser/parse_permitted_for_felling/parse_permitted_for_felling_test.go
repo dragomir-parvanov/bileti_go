@@ -1,6 +1,7 @@
-package parser
+package parse_permitted_for_felling
 
 import (
+	"bileti_go/parser"
 	"strings"
 	"testing"
 	"time"
@@ -165,7 +166,7 @@ const html = `
 `
 
 func TestShouldReturnId(t *testing.T) {
-	result := ParsePermittedForFellingHTML(strings.NewReader(html)).id
+	result := ParsePermittedForFelling(strings.NewReader(html)).id
 
 	expected := "0805138"
 
@@ -175,7 +176,7 @@ func TestShouldReturnId(t *testing.T) {
 }
 
 func TestShouldReturnRegionalForestryDirectorate(t *testing.T) {
-	result := ParsePermittedForFellingHTML(strings.NewReader(html)).regionalForestryDirectorate
+	result := ParsePermittedForFelling(strings.NewReader(html)).regionalForestryDirectorate
 
 	expected := "Бургас"
 
@@ -185,7 +186,7 @@ func TestShouldReturnRegionalForestryDirectorate(t *testing.T) {
 }
 
 func TestShouldReturnDirectiveNumber(t *testing.T) {
-	result := ParsePermittedForFellingHTML(strings.NewReader(html)).directiveNumber
+	result := ParsePermittedForFelling(strings.NewReader(html)).directiveNumber
 
 	expected := "127/18.02.2021"
 
@@ -195,7 +196,7 @@ func TestShouldReturnDirectiveNumber(t *testing.T) {
 }
 
 func TestShouldReturnPermittedFor(t *testing.T) {
-	result := ParsePermittedForFellingHTML(strings.NewReader(html)).permittedFor
+	result := ParsePermittedForFelling(strings.NewReader(html)).permittedFor
 
 	expected := "ЕЛЕКТРОЕНЕРГИЕН СИСТЕМЕН ОПЕРАТОР ЕАД"
 
@@ -205,7 +206,7 @@ func TestShouldReturnPermittedFor(t *testing.T) {
 }
 
 func TestShouldReturnAllowedForester(t *testing.T) {
-	result := ParsePermittedForFellingHTML(strings.NewReader(html)).allowedForester
+	result := ParsePermittedForFelling(strings.NewReader(html)).allowedForester
 
 	expected := "Регистриран лесовъд"
 
@@ -215,7 +216,7 @@ func TestShouldReturnAllowedForester(t *testing.T) {
 }
 
 func TestShouldReturnTypeOfFelling(t *testing.T) {
-	result := ParsePermittedForFellingHTML(strings.NewReader(html)).typeOfFelling
+	result := ParsePermittedForFelling(strings.NewReader(html)).typeOfFelling
 
 	expected := "В сервитути"
 
@@ -225,7 +226,7 @@ func TestShouldReturnTypeOfFelling(t *testing.T) {
 }
 
 func TestShouldReturnSection(t *testing.T) {
-	result := ParsePermittedForFellingHTML(strings.NewReader(html)).section
+	result := ParsePermittedForFelling(strings.NewReader(html)).section
 
 	expected := "450"
 
@@ -235,7 +236,7 @@ func TestShouldReturnSection(t *testing.T) {
 }
 
 func TestShouldReturnSubSection(t *testing.T) {
-	result := ParsePermittedForFellingHTML(strings.NewReader(html)).subSection
+	result := ParsePermittedForFelling(strings.NewReader(html)).subSection
 
 	expected := "1"
 
@@ -245,7 +246,7 @@ func TestShouldReturnSubSection(t *testing.T) {
 }
 
 func TestShouldReturnCadastreId(t *testing.T) {
-	result := ParsePermittedForFellingHTML(strings.NewReader(html)).cadastreId
+	result := ParsePermittedForFelling(strings.NewReader(html)).cadastreId
 
 	expected := "тестов кадастрален номер"
 
@@ -255,7 +256,7 @@ func TestShouldReturnCadastreId(t *testing.T) {
 }
 
 func TestShouldReturnMunicipality(t *testing.T) {
-	result := ParsePermittedForFellingHTML(strings.NewReader(html)).municipality
+	result := ParsePermittedForFelling(strings.NewReader(html)).municipality
 
 	expected := "Айтос"
 
@@ -265,7 +266,7 @@ func TestShouldReturnMunicipality(t *testing.T) {
 }
 
 func TestShouldReturnLand(t *testing.T) {
-	result := ParsePermittedForFellingHTML(strings.NewReader(html)).land
+	result := ParsePermittedForFelling(strings.NewReader(html)).land
 
 	expected := "Айтос землище"
 
@@ -275,7 +276,7 @@ func TestShouldReturnLand(t *testing.T) {
 }
 
 func TestShouldReturnAreaClearing(t *testing.T) {
-	result := ParsePermittedForFellingHTML(strings.NewReader(html)).areaClearing
+	result := ParsePermittedForFelling(strings.NewReader(html)).areaClearing
 
 	expected := 2.2
 
@@ -285,7 +286,7 @@ func TestShouldReturnAreaClearing(t *testing.T) {
 }
 
 func TestShouldReturnOwnershipType(t *testing.T) {
-	result := ParsePermittedForFellingHTML(strings.NewReader(html)).ownershipType
+	result := ParsePermittedForFelling(strings.NewReader(html)).ownershipType
 
 	expected := "ДГТ"
 
@@ -295,7 +296,7 @@ func TestShouldReturnOwnershipType(t *testing.T) {
 }
 
 func TestShouldReturnTreesMarkedBy(t *testing.T) {
-	result := ParsePermittedForFellingHTML(strings.NewReader(html)).treesMarkedBy
+	result := ParsePermittedForFelling(strings.NewReader(html)).treesMarkedBy
 
 	expected := "Тестов Маркировач"
 
@@ -305,7 +306,7 @@ func TestShouldReturnTreesMarkedBy(t *testing.T) {
 }
 
 func TestShouldReturnControlMarkNumber(t *testing.T) {
-	result := ParsePermittedForFellingHTML(strings.NewReader(html)).controlMarkNumber
+	result := ParsePermittedForFelling(strings.NewReader(html)).controlMarkNumber
 
 	expected := "Б 1401"
 
@@ -315,7 +316,7 @@ func TestShouldReturnControlMarkNumber(t *testing.T) {
 }
 
 func TestShouldReturnMarkColor(t *testing.T) {
-	result := ParsePermittedForFellingHTML(strings.NewReader(html)).controlMarkColor
+	result := ParsePermittedForFelling(strings.NewReader(html)).controlMarkColor
 
 	expected := "оранжева"
 
@@ -325,7 +326,7 @@ func TestShouldReturnMarkColor(t *testing.T) {
 }
 
 func TestShouldReturnDateOfCarnetInventory(t *testing.T) {
-	result := ParsePermittedForFellingHTML(strings.NewReader(html)).dateOfCarnetInventory
+	result := ParsePermittedForFelling(strings.NewReader(html)).dateOfCarnetInventory
 
 	expected := time.Time{}
 
@@ -335,7 +336,7 @@ func TestShouldReturnDateOfCarnetInventory(t *testing.T) {
 }
 
 func TestShouldReturnExpectedTreeExtraction(t *testing.T) {
-	result := ParsePermittedForFellingHTML(strings.NewReader(html)).expectedTreeExtraction
+	result := ParsePermittedForFelling(strings.NewReader(html)).expectedTreeExtraction
 
 	expected := 1.0
 
@@ -345,7 +346,7 @@ func TestShouldReturnExpectedTreeExtraction(t *testing.T) {
 }
 
 func TestShouldReturnAdditionalRequirements(t *testing.T) {
-	result := ParsePermittedForFellingHTML(strings.NewReader(html)).additionalRequirements
+	result := ParsePermittedForFelling(strings.NewReader(html)).additionalRequirements
 
 	expected := "Позволителното за сеч се издава за почистване в сервитут на електропровод без материален добив."
 
@@ -356,9 +357,9 @@ func TestShouldReturnAdditionalRequirements(t *testing.T) {
 }
 
 func TestShouldReturnDeadlineLoggingFrom(t *testing.T) {
-	result := ParsePermittedForFellingHTML(strings.NewReader(html)).deadlineLogging.From
+	result := ParsePermittedForFelling(strings.NewReader(html)).deadlineLogging.From
 
-	expected := time.Date(2025, 1, 27, 0, 0, 0, 0, GetLocation())
+	expected := time.Date(2025, 1, 27, 0, 0, 0, 0, parser.GetLocation())
 
 	if result.Compare(expected) != 0 {
 		t.Errorf("Got %s, expected %s", result, expected)
@@ -366,9 +367,9 @@ func TestShouldReturnDeadlineLoggingFrom(t *testing.T) {
 }
 
 func TestShouldReturnDeadlineLoggingTo(t *testing.T) {
-	result := ParsePermittedForFellingHTML(strings.NewReader(html)).deadlineLogging.To
+	result := ParsePermittedForFelling(strings.NewReader(html)).deadlineLogging.To
 
-	expected := time.Date(2025, 12, 31, 0, 0, 0, 0, GetLocation())
+	expected := time.Date(2025, 12, 31, 0, 0, 0, 0, parser.GetLocation())
 
 	if result.Compare(expected) != 0 {
 		t.Errorf("Got %s, expected %s", result, expected)
@@ -376,9 +377,9 @@ func TestShouldReturnDeadlineLoggingTo(t *testing.T) {
 }
 
 func TestShouldReturnDeadlineMaterialsUsageFrom(t *testing.T) {
-	result := ParsePermittedForFellingHTML(strings.NewReader(html)).deadlineMaterialsUsage.From
+	result := ParsePermittedForFelling(strings.NewReader(html)).deadlineMaterialsUsage.From
 
-	expected := time.Date(2025, 1, 27, 0, 0, 0, 0, GetLocation())
+	expected := time.Date(2025, 1, 27, 0, 0, 0, 0, parser.GetLocation())
 
 	if result.Compare(expected) != 0 {
 		t.Errorf("Got %s, expected %s", result, expected)
@@ -386,9 +387,9 @@ func TestShouldReturnDeadlineMaterialsUsageFrom(t *testing.T) {
 }
 
 func TestShouldReturnDeadlineMaterialsUsageTo(t *testing.T) {
-	result := ParsePermittedForFellingHTML(strings.NewReader(html)).deadlineMaterialsUsage.To
+	result := ParsePermittedForFelling(strings.NewReader(html)).deadlineMaterialsUsage.To
 
-	expected := time.Date(2025, 12, 31, 0, 0, 0, 0, GetLocation())
+	expected := time.Date(2025, 12, 31, 0, 0, 0, 0, parser.GetLocation())
 
 	if result.Compare(expected) != 0 {
 		t.Errorf("Got %s, expected %s", result, expected)
@@ -396,7 +397,7 @@ func TestShouldReturnDeadlineMaterialsUsageTo(t *testing.T) {
 }
 
 func TestShouldReturnCleaningProcedure(t *testing.T) {
-	result := ParsePermittedForFellingHTML(strings.NewReader(html)).cleaningProcedure
+	result := ParsePermittedForFelling(strings.NewReader(html)).cleaningProcedure
 
 	expected := "Тестово почистване"
 
@@ -406,7 +407,7 @@ func TestShouldReturnCleaningProcedure(t *testing.T) {
 }
 
 func TestShouldReturnRemovalToTemporaryStorage(t *testing.T) {
-	result := ParsePermittedForFellingHTML(strings.NewReader(html)).removalToTemporaryStorage
+	result := ParsePermittedForFelling(strings.NewReader(html)).removalToTemporaryStorage
 
 	expected := "съгласно ТП"
 
@@ -416,7 +417,7 @@ func TestShouldReturnRemovalToTemporaryStorage(t *testing.T) {
 }
 
 func TestShouldReturnIssuedBy(t *testing.T) {
-	result := ParsePermittedForFellingHTML(strings.NewReader(html)).issuedBy
+	result := ParsePermittedForFelling(strings.NewReader(html)).issuedBy
 
 	expected := "Издал човек"
 
@@ -426,7 +427,7 @@ func TestShouldReturnIssuedBy(t *testing.T) {
 }
 
 func TestShouldReturnWhoReceivedThePermit(t *testing.T) {
-	result := ParsePermittedForFellingHTML(strings.NewReader(html)).whoReceivedThePermit
+	result := ParsePermittedForFelling(strings.NewReader(html)).whoReceivedThePermit
 
 	expected := "Получил човек"
 
@@ -436,9 +437,9 @@ func TestShouldReturnWhoReceivedThePermit(t *testing.T) {
 }
 
 func TestShouldReturnIssuedOn(t *testing.T) {
-	result := ParsePermittedForFellingHTML(strings.NewReader(html)).issuedOn
+	result := ParsePermittedForFelling(strings.NewReader(html)).issuedOn
 
-	expected := time.Date(2025, 1, 24, 0, 0, 0, 0, GetLocation())
+	expected := time.Date(2025, 1, 24, 0, 0, 0, 0, parser.GetLocation())
 
 	if result.Compare(expected) != 0 {
 		t.Errorf("Got %s, expected %s", result, expected)
@@ -446,7 +447,7 @@ func TestShouldReturnIssuedOn(t *testing.T) {
 }
 
 func TestShouldReturnIssuedByEmployee(t *testing.T) {
-	result := ParsePermittedForFellingHTML(strings.NewReader(html)).issuedByEmployee
+	result := ParsePermittedForFelling(strings.NewReader(html)).issuedByEmployee
 
 	expected := "Служител"
 
@@ -456,7 +457,7 @@ func TestShouldReturnIssuedByEmployee(t *testing.T) {
 }
 
 func TestShouldReturnIssuedCode(t *testing.T) {
-	result := ParsePermittedForFellingHTML(strings.NewReader(html)).issuedCode
+	result := ParsePermittedForFelling(strings.NewReader(html)).issuedCode
 
 	expected := "Някакъв код"
 
@@ -467,7 +468,7 @@ func TestShouldReturnIssuedCode(t *testing.T) {
 
 func TestShouldReturnPermitIssueRegion(t *testing.T) {
 
-	result := ParsePermittedForFellingHTML(strings.NewReader(html)).permitIssuePlace.region
+	result := ParsePermittedForFelling(strings.NewReader(html)).permitIssuePlace.region
 
 	expected := "Бургас"
 
@@ -477,7 +478,7 @@ func TestShouldReturnPermitIssueRegion(t *testing.T) {
 }
 
 func TestShouldReturnPermitIssueMunicipality(t *testing.T) {
-	result := ParsePermittedForFellingHTML(strings.NewReader(html)).permitIssuePlace.municipality
+	result := ParsePermittedForFelling(strings.NewReader(html)).permitIssuePlace.municipality
 
 	expected := "Айтос"
 
@@ -487,7 +488,7 @@ func TestShouldReturnPermitIssueMunicipality(t *testing.T) {
 }
 
 func TestShouldReturnPermitIssueLand(t *testing.T) {
-	result := ParsePermittedForFellingHTML(strings.NewReader(html)).permitIssuePlace.land
+	result := ParsePermittedForFelling(strings.NewReader(html)).permitIssuePlace.land
 
 	expected := "Айтос"
 
@@ -497,7 +498,7 @@ func TestShouldReturnPermitIssueLand(t *testing.T) {
 }
 
 func TestShouldReturnPermitIssueAddress(t *testing.T) {
-	result := ParsePermittedForFellingHTML(strings.NewReader(html)).permitIssuePlace.address
+	result := ParsePermittedForFelling(strings.NewReader(html)).permitIssuePlace.address
 
 	expected := "Някакъв адрес"
 
@@ -507,7 +508,7 @@ func TestShouldReturnPermitIssueAddress(t *testing.T) {
 }
 
 func TestShouldReturnPermitIssueSubsection(t *testing.T) {
-	result := ParsePermittedForFellingHTML(strings.NewReader(html)).permitIssuePlace.subSection
+	result := ParsePermittedForFelling(strings.NewReader(html)).permitIssuePlace.subSection
 
 	expected := "Някакъв подотдел"
 
@@ -517,7 +518,7 @@ func TestShouldReturnPermitIssueSubsection(t *testing.T) {
 }
 
 func TestShouldReturnPermitIssueGpsCoordinates(t *testing.T) {
-	result := ParsePermittedForFellingHTML(strings.NewReader(html)).permitIssuePlace.gpsCoordinates
+	result := ParsePermittedForFelling(strings.NewReader(html)).permitIssuePlace.gpsCoordinates
 
 	expected := "Някакви кординати"
 
@@ -528,9 +529,9 @@ func TestShouldReturnPermitIssueGpsCoordinates(t *testing.T) {
 
 func TestShouldReturnExtensionLoggingTo(t *testing.T) {
 
-	result := ParsePermittedForFellingHTML(strings.NewReader(html)).extension.loggingTo
+	result := ParsePermittedForFelling(strings.NewReader(html)).extension.loggingTo
 
-	expected := time.Date(2025, 2, 27, 0, 0, 0, 0, GetLocation())
+	expected := time.Date(2025, 2, 27, 0, 0, 0, 0, parser.GetLocation())
 
 	if result.Compare(expected) != 0 {
 		t.Errorf("Got %s, expected %s", result, expected)
@@ -538,9 +539,9 @@ func TestShouldReturnExtensionLoggingTo(t *testing.T) {
 }
 
 func TestShouldReturnExtensionMaterialsUsageTo(t *testing.T) {
-	result := ParsePermittedForFellingHTML(strings.NewReader(html)).extension.materialsUsageTo
+	result := ParsePermittedForFelling(strings.NewReader(html)).extension.materialsUsageTo
 
-	expected := time.Date(2025, 2, 28, 0, 0, 0, 0, GetLocation())
+	expected := time.Date(2025, 2, 28, 0, 0, 0, 0, parser.GetLocation())
 
 	if result.Compare(expected) != 0 {
 		t.Errorf("Got %s, expected %s", result, expected)
@@ -548,7 +549,7 @@ func TestShouldReturnExtensionMaterialsUsageTo(t *testing.T) {
 }
 
 func TestShouldReturnExtensionIssuedBy(t *testing.T) {
-	result := ParsePermittedForFellingHTML(strings.NewReader(html)).extension.issuedBy
+	result := ParsePermittedForFelling(strings.NewReader(html)).extension.issuedBy
 
 	expected := "Удължителен Човек"
 
@@ -558,7 +559,7 @@ func TestShouldReturnExtensionIssuedBy(t *testing.T) {
 }
 
 func TestShouldReturnExtraction(t *testing.T) {
-	result := ParsePermittedForFellingHTML(strings.NewReader(html)).extraction
+	result := ParsePermittedForFelling(strings.NewReader(html)).extraction
 
 	if len(result) != 1 {
 		t.Errorf("Got %v, expected 1", len(result))

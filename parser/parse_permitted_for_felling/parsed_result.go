@@ -1,6 +1,7 @@
-package parser
+package parse_permitted_for_felling
 
 import (
+	parser_extraction_category "bileti_go/parser/extraction_category"
 	utilstime "bileti_go/utils/time"
 	"time"
 )
@@ -38,18 +39,9 @@ type ParsedResult struct {
 	permitIssuePlace            PermitIssuePlace
 	extension                   Extension
 }
-type ExtractionCategory string
-
-const (
-	LargeConstructionTimber  ExtractionCategory = "LargeConstructionTimber"
-	MediumConstructionTimber ExtractionCategory = "MediumConstructionTimber"
-	SmallConstructionTimber  ExtractionCategory = "SmallConstructionTimber"
-	Wood                     ExtractionCategory = "Wood"
-	TopHamper                ExtractionCategory = "TopHamper"
-)
 
 type TreeExtraction struct {
-	category ExtractionCategory
+	category parser_extraction_category.ExtractionCategory
 	treeType string
 	value    float64
 	note     string

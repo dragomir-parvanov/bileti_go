@@ -1,7 +1,7 @@
 package certificate_protocol_parse
 
 import (
-	"bileti_go/parser"
+	parser_extraction_category "bileti_go/parser/extraction_category"
 	"time"
 )
 
@@ -35,7 +35,7 @@ type CertificateProtocolParseResult struct {
 }
 
 type CertificateProtocolTreeExtraction struct {
-	category                    parser.ExtractionCategory
+	category                    parser_extraction_category.ExtractionCategory
 	treeType                    string
 	byLoggingPermitCollected    float64
 	actuallyCollected           float64

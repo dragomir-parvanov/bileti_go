@@ -2,6 +2,7 @@ package certificate_protocol_parse
 
 import (
 	"bileti_go/parser"
+	parser_extraction_category "bileti_go/parser/extraction_category"
 	"reflect"
 	"strings"
 	"testing"
@@ -214,10 +215,10 @@ func TestShouldMatchObject(t *testing.T) {
 		areaOfPermit:                0.09,
 		areaDone:                    0.08,
 		extraction: []CertificateProtocolTreeExtraction{
-			{category: parser.Wood, treeType: "Ясен", byLoggingPermitCollected: 0, actuallyCollected: 0, availableInTheClearing: 0, availableInTemporaryStorage: 0},
-			{category: parser.Wood, treeType: "Други широколистни", byLoggingPermitCollected: 0.1, actuallyCollected: 0, availableInTheClearing: 0, availableInTemporaryStorage: 0},
-			{category: parser.Wood, treeType: "Айлант", byLoggingPermitCollected: 0.1, actuallyCollected: 0, availableInTheClearing: 0, availableInTemporaryStorage: 0},
-			{category: parser.Wood, treeType: "Джанка", byLoggingPermitCollected: 0.3, actuallyCollected: 0, availableInTheClearing: 0, availableInTemporaryStorage: 0},
+			{category: parser_extraction_category.Wood, treeType: "Ясен", byLoggingPermitCollected: 0, actuallyCollected: 0, availableInTheClearing: 0, availableInTemporaryStorage: 0},
+			{category: parser_extraction_category.Wood, treeType: "Други широколистни", byLoggingPermitCollected: 0.1, actuallyCollected: 0, availableInTheClearing: 0, availableInTemporaryStorage: 0},
+			{category: parser_extraction_category.Wood, treeType: "Айлант", byLoggingPermitCollected: 0.1, actuallyCollected: 0, availableInTheClearing: 0, availableInTemporaryStorage: 0},
+			{category: parser_extraction_category.Wood, treeType: "Джанка", byLoggingPermitCollected: 0.3, actuallyCollected: 0, availableInTheClearing: 0, availableInTemporaryStorage: 0},
 		},
 		notMarkedLoggedTreesExist:    true,
 		volumeDifferenceDescription:  `Сечта е изведена по КП на РДГ Варна съставен за установяване на опасни дървета в имот 02508.62.38.Дървесината е негодна за употреба`,
