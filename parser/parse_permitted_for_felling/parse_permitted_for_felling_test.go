@@ -43,9 +43,9 @@ const html = `
     <tr>
         <td colspan="2" align="left">с нает регистриран лесовъд &nbsp;<b>Регистриран лесовъд</b> , </td>
     </tr>
-    <tr>
-        <td colspan="2" align="left">да извърши добива в отдел № <b>450</b>; подотдел <b>1</b>; имот с (кадастрален/КВС) № <b>тестов кадастрален номер</b>, находящ се в: </td>
-    </tr>
+	<tr>
+		<td colspan="2" align="left">да извърши добива в отдел № <b>256</b>; подотдел <b>з</b> съгласно инвентаризацията на <b>ДГС София</b>, утвърдена със <br><br>заповед № <b>1024/2019-12-19</b>г.; имот с (кадастрален/КВС) № <b>68134.4129.537</b>, находящ се в: </td>
+	</tr>
     <tr>
         <td colspan="2" align="left">Община <b>Айтос</b>; Землище <b>Айтос землище</b> площно сечище от <b>2.200</b> хектара; Вид собственост : <b>ДГТ</b></td>
     </tr>
@@ -228,7 +228,7 @@ func TestShouldReturnTypeOfFelling(t *testing.T) {
 func TestShouldReturnSection(t *testing.T) {
 	result := ParsePermittedForFelling(strings.NewReader(html)).section
 
-	expected := "450"
+	expected := "256"
 
 	if result != expected {
 		t.Errorf("Got %s, expected %s", result, expected)
@@ -238,7 +238,7 @@ func TestShouldReturnSection(t *testing.T) {
 func TestShouldReturnSubSection(t *testing.T) {
 	result := ParsePermittedForFelling(strings.NewReader(html)).subSection
 
-	expected := "1"
+	expected := "з"
 
 	if result != expected {
 		t.Errorf("Got %s, expected %s", result, expected)
@@ -248,7 +248,7 @@ func TestShouldReturnSubSection(t *testing.T) {
 func TestShouldReturnAccordingToTheInventoryOf(t *testing.T) {
 	actual := ParsePermittedForFelling(strings.NewReader(html)).accordingToTheInventoryOf
 
-	expected := ""
+	expected := "ДГС София"
 
 	if actual != expected {
 		t.Errorf("Got %s, expected %s", actual, expected)
@@ -258,7 +258,7 @@ func TestShouldReturnAccordingToTheInventoryOf(t *testing.T) {
 func TestShouldReturnInventoryOrderId(t *testing.T) {
 	actual := ParsePermittedForFelling(strings.NewReader(html)).inventoryOrderId
 
-	expected := ""
+	expected := "1024/2019-12-19г."
 
 	if actual != expected {
 		t.Errorf("Got %s, expected %s", actual, expected)
@@ -268,7 +268,7 @@ func TestShouldReturnInventoryOrderId(t *testing.T) {
 func TestShouldReturnCadastreId(t *testing.T) {
 	result := ParsePermittedForFelling(strings.NewReader(html)).cadastreId
 
-	expected := "тестов кадастрален номер"
+	expected := "68134.4129.537"
 
 	if result != expected {
 		t.Errorf("Got %s, expected %s", result, expected)
