@@ -38,5 +38,6 @@ func ParseCertificateProtocol(reader io.Reader) CertificateProtocolParseResult {
 		toImproveClearingDeadline:    utils.Must(certificate_protocol_parse_fields.ExtractToImproveClearingDeadline(selection)),
 		toImproveClearingDescription: certificate_protocol_parse_fields.ExtractToImproveClearingDescription(selection),
 		issuedBy:                     certificate_protocol_parse_fields.ExtractIssuedBy(selection),
+		witnessedBy:                  certificate_protocol_parse_fields.ExtractWitnessedBy(selection),
 	}
 }

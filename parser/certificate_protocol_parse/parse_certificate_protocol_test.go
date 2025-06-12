@@ -183,7 +183,7 @@ const html = `
 </tr>
 <tr>
   <td align="left">Съставил: Драго</td>
-  <td align="left">Присъствал: ..........................................</td>
+  <td align="left">Присъствал: Бай Иван</td>
 </tr>
 <tr>
   <td align="left"><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...........</b></td>
@@ -222,6 +222,7 @@ func TestShouldMatchObject(t *testing.T) {
 		toImproveClearingDeadline:    time.Time{},
 		toImproveClearingDescription: "",
 		issuedBy:                     "Драго",
+		witnessedBy:                  "Бай Иван",
 	}
 
 	if reflect.DeepEqual(actual, expected) == false {
