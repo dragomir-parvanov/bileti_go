@@ -21,6 +21,7 @@ type CertificateProtocolParseResult struct {
 	ownership                    string
 	areaOfPermit                 float64
 	areaDone                     float64
+	extraction                   []CertificateProtocolTreeExtraction
 	notMarkedLoggedTreesExist    bool
 	volumeDifferenceDescription  string
 	violationDescription         string
