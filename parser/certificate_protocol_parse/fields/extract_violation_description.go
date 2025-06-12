@@ -6,7 +6,7 @@ import (
 )
 
 func ExtractViolationDescription(section *goquery.Selection) string {
-	contains := fmt.Sprintf(`td:contains('При сечта и извоза на дървесина са допуснати следните нарушения на Закона за горите:')`)
+	contains := fmt.Sprintf("td:contains('При сечта и извоза на дървесина са допуснати следните нарушения на Закона за горите:')")
 
 	line := section.Find(contains).First().Find("b").Next().Text()
 
