@@ -29,7 +29,7 @@ type CertificateProtocolParseResult struct {
 	violationRecipient           string
 	toImproveClearingDeadline    time.Time
 	toImproveClearingDescription string
-	createdBy                    string
+	issuedBy                     string
 	witnessedBy                  string
 }
 
