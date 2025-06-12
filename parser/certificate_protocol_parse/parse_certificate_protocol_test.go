@@ -42,10 +42,10 @@ const html = `
   <td colspan="2" align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Днес: <b>08.04.2025</b> год., на основание чл. 109 от Закона за горите се състави настоящият</td>
 </tr>
 <tr>
-  <td colspan="2" align="left">констативен протокол от: <b>...........</b></td>
+  <td colspan="2" align="left">констативен протокол от: <b>Петкан</b></td>
 </tr>
 <tr>
-  <td colspan="2" align="left">в присъствието на: <b>...........</b></td>
+  <td colspan="2" align="left">в присъствието на: <b>Станимир</b></td>
 </tr>
 <tr>
   <td colspan="2" align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>1.</b> След съвместно обхождане и проверка на сечището в Община: <b>Балчик</b>;</td>
@@ -175,9 +175,9 @@ const html = `
 </td></tr>
 <tr>
   <td align="left" colspan="2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>5.</b> За подобряване състоянието на насаждението в срок до: 
-  <b>&nbsp;</b>
+  <b>17.04.2000</b>
  следва да се проведът следните мероприятия:&nbsp;
- <b></b></td>
+ <b>Силен Фарм</b></td>
 </tr>
 <tr>
 		<td colspan="2">&nbsp;</td>
@@ -204,8 +204,8 @@ func TestShouldMatchObject(t *testing.T) {
 		permittedForFellingId:       "0800703",
 		permittedForFellingDate:     time.Date(2025, 1, 8, 0, 0, 0, 0, parser.GetLocation()),
 		when:                        time.Date(2025, 4, 8, 0, 0, 0, 0, parser.GetLocation()),
-		findingsRecordWitnessedBy:   "",
-		findingsRecordIssuedBy:      "",
+		findingsRecordIssuedBy:      "Петкан",
+		findingsRecordWitnessedBy:   "Станимир",
 		municipality:                "Балчик",
 		land:                        "Балчик",
 		section:                     "53",
@@ -226,8 +226,8 @@ func TestShouldMatchObject(t *testing.T) {
 		loggingFinishDescription:     "Задоволително",
 		violationId:                  "1337",
 		violationRecipient:           "Иван Петков",
-		toImproveClearingDeadline:    time.Time{},
-		toImproveClearingDescription: "",
+		toImproveClearingDeadline:    time.Date(2000, 4, 17, 0, 0, 0, 0, parser.GetLocation()),
+		toImproveClearingDescription: "Силен Фарм",
 		issuedBy:                     "Драго",
 		witnessedBy:                  "Бай Иван",
 	}
