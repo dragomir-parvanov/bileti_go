@@ -131,10 +131,6 @@ func makeTreeExtraction(category parser_extraction_category.ExtractionCategory, 
 }
 
 func parseFloat(str string) float64 {
-	if str == "" {
-		return 0
-	}
-
 	parsedValue := utils.Must(strconv.ParseFloat(str, 64))
 
 	return parsedValue
