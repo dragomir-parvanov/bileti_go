@@ -38,6 +38,8 @@ type ParsedResult struct {
 	issuedCode                  string
 	permitIssuePlace            PermitIssuePlace
 	extension                   Extension
+	accordingToTheInventoryOf   string
+	inventoryOrderId            string
 }
 
 type TreeExtraction struct {

@@ -245,6 +245,26 @@ func TestShouldReturnSubSection(t *testing.T) {
 	}
 }
 
+func TestShouldReturnAccordingToTheInventoryOf(t *testing.T) {
+	actual := ParsePermittedForFelling(strings.NewReader(html)).accordingToTheInventoryOf
+
+	expected := ""
+
+	if actual != expected {
+		t.Errorf("Got %s, expected %s", actual, expected)
+	}
+}
+
+func TestShouldReturnInventoryOrderId(t *testing.T) {
+	actual := ParsePermittedForFelling(strings.NewReader(html)).inventoryOrderId
+
+	expected := ""
+
+	if actual != expected {
+		t.Errorf("Got %s, expected %s", actual, expected)
+	}
+}
+
 func TestShouldReturnCadastreId(t *testing.T) {
 	result := ParsePermittedForFelling(strings.NewReader(html)).cadastreId
 

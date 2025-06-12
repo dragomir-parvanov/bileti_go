@@ -2,6 +2,7 @@ package parse_permitted_for_felling
 
 import (
 	"bileti_go/parser"
+	parse_permitted_for_felling_fields "bileti_go/parser/parse_permitted_for_felling/fields"
 	"bileti_go/utils"
 	utilsstring "bileti_go/utils/string"
 	utilstime "bileti_go/utils/time"
@@ -36,6 +37,8 @@ func ParsePermittedForFelling(htmlResult io.Reader) ParsedResult {
 		typeOfFelling:               extractTypeOfFelling(mainTable),
 		section:                     extractSection(mainTable),
 		subSection:                  extractSubSection(mainTable),
+		accordingToTheInventoryOf:   parse_permitted_for_felling_fields.ExtractAccordingToTheInventoryOf(mainTable),
+		inventoryOrderId:            parse_permitted_for_felling_fields.ExtractInventoryOrderId(mainTable),
 		cadastreId:                  extractCadastreId(mainTable),
 		municipality:                extractMunicipality(mainTable),
 		land:                        extractLand(mainTable),
