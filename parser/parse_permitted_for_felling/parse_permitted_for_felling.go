@@ -39,7 +39,7 @@ func ParsePermittedForFelling(htmlResult io.Reader) ParsedResult {
 		subSection:                  extractSubSection(mainTable),
 		accordingToTheInventoryOf:   parse_permitted_for_felling_fields.ExtractAccordingToTheInventoryOf(mainTable),
 		inventoryOrderId:            parse_permitted_for_felling_fields.ExtractInventoryOrderId(mainTable),
-		cadastreId:                  extractCadastreId(mainTable),
+		cadastreId:                  parse_permitted_for_felling_fields.ExtractCadastreId(mainTable),
 		municipality:                extractMunicipality(mainTable),
 		land:                        extractLand(mainTable),
 		areaClearing:                extractAreaClearing(mainTable),
@@ -114,12 +114,6 @@ func extractSubSection(doc *goquery.Selection) string {
 	subSection := doc.Find("td:contains('подотдел')").First().Find("b").Next().First().Text()
 
 	return utilsstring.CleanString(subSection)
-}
-
-func extractCadastreId(doc *goquery.Selection) string {
-	cadastreId := doc.Find("td:contains('подотдел')").First().Find("b").Next().Next().Text()
-
-	return utilsstring.CleanString(cadastreId)
 }
 
 func extractMunicipality(doc *goquery.Selection) string {
