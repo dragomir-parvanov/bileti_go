@@ -2,6 +2,8 @@ package options_parser
 
 import (
 	"bileti_go/utils"
+	utils_test "bileti_go/utils/test"
+	"errors"
 	"fmt"
 	"reflect"
 	"strings"
@@ -58,12 +60,8 @@ func TestShouldReturnOptions(t *testing.T) {
 	}
 }
 
-func TestShouldReturnErrorOnEmpty(t *testing.T) {
-	html := `
-
-`
-
-	_, err := ParseOptions(strings.NewReader(html))
+func TestShouldReturnErrorOnReaderError(t *testing.T) {
+	_, err := ParseOptions(&utils_test.ErrReader{Error: errors.New("reader error")})
 
 	if err != nil {
 		fmt.Errorf("error should be defined")
