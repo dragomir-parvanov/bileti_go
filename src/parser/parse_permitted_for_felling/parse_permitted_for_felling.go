@@ -47,7 +47,7 @@ func ParsePermittedForFelling(htmlResult io.Reader) ParsedResult {
 		treesMarkedBy:               extractTreesMarkedBy(mainTable),
 		controlMarkNumber:           extractControlMarkNumber(mainTable),
 		controlMarkColor:            extractMarkColor(mainTable),
-		dateOfCarnetInventory:       extractDateOfCarnetInventory(mainTable),
+		dateOfCarnetInventory:       parse_permitted_for_felling_fields.ExtractDateOfCarnetInventory(mainTable),
 		expectedTreeExtraction:      extractExpectedTreeExtraction(mainTable),
 		extraction:                  ParseTreeExtraction(categoryTable),
 		additionalRequirements:      extractAdditionalRequirements(additionalTable),
@@ -158,24 +158,6 @@ func extractMarkColor(doc *goquery.Selection) string {
 	markColor := doc.Find("td:contains('с контролна горска марка №')").First().Find("b").Next().First().Text()
 
 	return utils_string.CleanString(markColor)
-}
-
-func extractDateOfCarnetInventory(doc *goquery.Selection) time.Time {
-	dateOfCarnetInventoryLine := doc.Find("td:contains('с контролна горска марка №')").First().Find("b").Next().Next().First().Text()
-
-	dateOfCarnetInventoryLine = utils_string.CleanString(dateOfCarnetInventoryLine)
-
-	if dateOfCarnetInventoryLine == "" {
-		return time.Time{}
-	}
-
-	cleanedLine := utils_string.CleanString(dateOfCarnetInventoryLine)
-
-	result, err := time.ParseInLocation(parser.DateLayout, cleanedLine, parser.GetLocation())
-
-	dateOfCarnetInventory := utils.Must(result, err)
-
-	return dateOfCarnetInventory
 }
 
 func extractExpectedTreeExtraction(doc *goquery.Selection) float64 {
