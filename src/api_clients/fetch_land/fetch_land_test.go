@@ -67,3 +67,30 @@ func TestShouldReturnTaskGetPopIfMunicipalityIdIsNotZero(t *testing.T) {
 
 	FetchLand(server.URL, 0, 1)
 }
+
+func TestShouldReturnErrorWhenTheServerReturnsError(t *testing.T) {
+	notReachableUrl := `http://127.0.0.1:1`
+
+	res, err := FetchLand(notReachableUrl, 0, 0)
+
+	if err == nil {
+		resStr := string(utils.Must(io.ReadAll(res)))
+		t.Errorf("Expected to get an error, but go response %v", resStr)
+	}
+}
+
+func TestShouldReturnErrorWhenTheServerReturnsNonOkStatusCode(t *testing.T) {
+	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.WriteHeader(http.StatusInternalServerError)
+
+	}))
+
+	defer server.Close()
+
+	res, err := FetchLand(server.URL, 0, 1)
+
+	if err == nil {
+		resStr := string(utils.Must(io.ReadAll(res)))
+		t.Errorf("Expected to get an error, but go response %v", resStr)
+	}
+}

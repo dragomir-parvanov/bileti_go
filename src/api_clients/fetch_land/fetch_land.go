@@ -2,6 +2,7 @@ package api_clients
 
 import (
 	"bileti_go/src/utils"
+	"fmt"
 	"io"
 	"net/http"
 	"net/url"
@@ -35,6 +36,10 @@ func FetchLand(baseUrl string, regionId int32, municipalityId int32) (io.Reader,
 
 	if err != nil {
 		return nil, err
+	}
+
+	if resp.StatusCode != 200 {
+		return nil, fmt.Errorf("Request failed with status code %d", resp.StatusCode)
 	}
 
 	return resp.Body, nil
