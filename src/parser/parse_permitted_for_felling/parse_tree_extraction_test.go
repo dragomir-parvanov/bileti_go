@@ -257,7 +257,7 @@ func TestShouldReturnNoLargeConstructionExtraction(t *testing.T) {
 	actual := ParseTreeExtraction(selection)
 
 	largeConstruction := filter(actual, func(extraction TreeExtraction) bool {
-		return extraction.category == parser_extraction_category.parser_extraction_category.LargeConstructionTimber
+		return extraction.category == parser_extraction_category.LargeConstructionTimber
 	})
 
 	if len(largeConstruction) != 0 {
