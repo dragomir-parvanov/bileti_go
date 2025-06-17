@@ -549,7 +549,7 @@ func TestShouldReturnPermitIssueGpsCoordinates(t *testing.T) {
 
 func TestShouldReturnExtensionLoggingTo(t *testing.T) {
 
-	result := ParsePermittedForFelling(strings.NewReader(html)).extension.loggingTo
+	result := ParsePermittedForFelling(strings.NewReader(html)).extension.loggingDeadlineTo
 
 	expected := time.Date(2025, 2, 27, 0, 0, 0, 0, parser.GetLocation())
 
@@ -559,7 +559,7 @@ func TestShouldReturnExtensionLoggingTo(t *testing.T) {
 }
 
 func TestShouldReturnExtensionMaterialsUsageTo(t *testing.T) {
-	result := ParsePermittedForFelling(strings.NewReader(html)).extension.materialsUsageTo
+	result := ParsePermittedForFelling(strings.NewReader(html)).extension.deadlineTransportingDeadlineTo
 
 	expected := time.Date(2025, 2, 28, 0, 0, 0, 0, parser.GetLocation())
 

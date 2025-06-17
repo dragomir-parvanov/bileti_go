@@ -59,7 +59,7 @@ type PermitIssuePlace struct {
 }
 
 type Extension struct {
-	loggingTo        time.Time
-	materialsUsageTo time.Time
-	issuedBy         string
+	loggingDeadlineTo              time.Time
+	deadlineTransportingDeadlineTo time.Time
+	issuedBy                       string
 }

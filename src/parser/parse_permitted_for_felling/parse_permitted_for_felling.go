@@ -2,7 +2,7 @@ package parse_permitted_for_felling
 
 import (
 	"bileti_go/src/parser"
-	parse_permitted_for_felling_fields2 "bileti_go/src/parser/parse_permitted_for_felling/fields"
+	parse_permitted_for_felling_fields "bileti_go/src/parser/parse_permitted_for_felling/fields"
 	"bileti_go/src/utils"
 	"bileti_go/src/utils/string"
 	utilstime "bileti_go/src/utils/time"
@@ -37,9 +37,9 @@ func ParsePermittedForFelling(htmlResult io.Reader) ParsedResult {
 		typeOfFelling:               extractTypeOfFelling(mainTable),
 		section:                     extractSection(mainTable),
 		subSection:                  extractSubSection(mainTable),
-		accordingToTheInventoryOf:   parse_permitted_for_felling_fields2.ExtractAccordingToTheInventoryOf(mainTable),
-		inventoryOrderId:            parse_permitted_for_felling_fields2.ExtractInventoryOrderId(mainTable),
-		cadastreId:                  parse_permitted_for_felling_fields2.ExtractCadastreId(mainTable),
+		accordingToTheInventoryOf:   parse_permitted_for_felling_fields.ExtractAccordingToTheInventoryOf(mainTable),
+		inventoryOrderId:            parse_permitted_for_felling_fields.ExtractInventoryOrderId(mainTable),
+		cadastreId:                  parse_permitted_for_felling_fields.ExtractCadastreId(mainTable),
 		municipality:                extractMunicipality(mainTable),
 		land:                        extractLand(mainTable),
 		areaClearing:                extractAreaClearing(mainTable),
@@ -302,9 +302,9 @@ func extractPermissionIssuePlace(doc *goquery.Selection) PermitIssuePlace {
 func extractExtension(doc *goquery.Selection) Extension {
 
 	return Extension{
-		loggingTo:        extractLoggingToExtension(doc),
-		materialsUsageTo: extractMaterialsUsageToExtension(doc),
-		issuedBy:         extractIssuedByExtension(doc),
+		loggingDeadlineTo:              extractLoggingToExtension(doc),
+		deadlineTransportingDeadlineTo: parse_permitted_for_felling_fields.ExtractTransportingDeadlineToExtension(doc),
+		issuedBy:                       extractIssuedByExtension(doc),
 	}
 }
 
@@ -318,24 +318,6 @@ func extractLoggingToExtension(doc *goquery.Selection) time.Time {
 	}
 
 	regex := regexp.MustCompile("За провеждане на сечта до :(.*) г.")
-
-	match := regex.FindStringSubmatch(cleanedLine)[1]
-
-	result := utils.Must(time.ParseInLocation(parser.DateLayout, utils_string.CleanString(match), parser.GetLocation()))
-
-	return result
-}
-
-func extractMaterialsUsageToExtension(doc *goquery.Selection) time.Time {
-	line := doc.Find("td:contains('За извоз на материалите до :')").First().Text()
-
-	cleanedLine := utils_string.CleanString(line)
-
-	if cleanedLine == "" {
-		return time.Time{}
-	}
-
-	regex := regexp.MustCompile("За извоз на материалите до :(.*) г.")
 
 	match := regex.FindStringSubmatch(cleanedLine)[1]
 
