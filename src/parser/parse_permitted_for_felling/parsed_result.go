@@ -30,7 +30,7 @@ type ParsedResult struct {
 	extraction                  []TreeExtraction
 	additionalRequirements      string
 	deadlineLogging             utilstime.TimeRange
-	deadlineMaterialsUsage      utilstime.TimeRange
+	deadlineTransporting        utilstime.TimeRange
 	cleaningProcedure           string
 	removalToTemporaryStorage   string
 	issuedBy                    string
@@ -59,7 +59,7 @@ type PermitIssuePlace struct {
 }
 
 type Extension struct {
-	loggingDeadlineTo              time.Time
-	deadlineTransportingDeadlineTo time.Time
-	issuedBy                       string
+	loggingDeadlineTo      time.Time
+	transportingDeadlineTo time.Time
+	issuedBy               string
 }

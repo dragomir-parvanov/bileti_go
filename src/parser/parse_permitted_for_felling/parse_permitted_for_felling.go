@@ -52,7 +52,7 @@ func ParsePermittedForFelling(htmlResult io.Reader) ParsedResult {
 		extraction:                  ParseTreeExtraction(categoryTable),
 		additionalRequirements:      extractAdditionalRequirements(additionalTable),
 		deadlineLogging:             extractDeadlineLogging(additionalTable),
-		deadlineMaterialsUsage:      extractDeadlineMaterialsUsage(additionalTable),
+		deadlineTransporting:        extractDeadlineTransporting(additionalTable),
 		cleaningProcedure:           extractCleaningProcedure(additionalTable),
 		removalToTemporaryStorage:   extractRemovalFromTemporaryStorage(additionalTable),
 		issuedBy:                    extractIssuedBy(additionalTable),
@@ -206,16 +206,16 @@ func extractDeadlineLogging(doc *goquery.Selection) utilstime.TimeRange {
 	return utilstime.TimeRange{From: resultFrom, To: resultTo}
 }
 
-func extractDeadlineMaterialsUsage(doc *goquery.Selection) utilstime.TimeRange {
+func extractDeadlineTransporting(doc *goquery.Selection) utilstime.TimeRange {
 	deadlineLoggingLine := doc.Find("td:contains('Срок за извозване на материалите от сечището от')").First().Find("b")
 
-	deadlineMaterialsUsageFrom := utils_string.CleanString(deadlineLoggingLine.First().Text())
+	transportingDeadlineFrom := utils_string.CleanString(deadlineLoggingLine.First().Text())
 
-	deadlineMaterialsUsageTo := utils_string.CleanString(deadlineLoggingLine.Next().Text())
+	transportingDeadlineTo := utils_string.CleanString(deadlineLoggingLine.Next().Text())
 
-	resultFrom := utils.Must(time.ParseInLocation(parser.DateLayout, deadlineMaterialsUsageFrom, parser.GetLocation()))
+	resultFrom := utils.Must(time.ParseInLocation(parser.DateLayout, transportingDeadlineFrom, parser.GetLocation()))
 
-	resultTo := utils.Must(time.ParseInLocation(parser.DateLayout, deadlineMaterialsUsageTo, parser.GetLocation()))
+	resultTo := utils.Must(time.ParseInLocation(parser.DateLayout, transportingDeadlineTo, parser.GetLocation()))
 
 	return utilstime.TimeRange{From: resultFrom, To: resultTo}
 }
@@ -302,9 +302,9 @@ func extractPermissionIssuePlace(doc *goquery.Selection) PermitIssuePlace {
 func extractExtension(doc *goquery.Selection) Extension {
 
 	return Extension{
-		loggingDeadlineTo:              extractLoggingToExtension(doc),
-		deadlineTransportingDeadlineTo: parse_permitted_for_felling_fields.ExtractTransportingDeadlineToExtension(doc),
-		issuedBy:                       extractIssuedByExtension(doc),
+		loggingDeadlineTo:      extractLoggingToExtension(doc),
+		transportingDeadlineTo: parse_permitted_for_felling_fields.ExtractTransportingDeadlineToExtension(doc),
+		issuedBy:               extractIssuedByExtension(doc),
 	}
 }
 

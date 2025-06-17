@@ -397,7 +397,7 @@ func TestShouldReturnDeadlineLoggingTo(t *testing.T) {
 }
 
 func TestShouldReturnDeadlineMaterialsUsageFrom(t *testing.T) {
-	result := ParsePermittedForFelling(strings.NewReader(html)).deadlineMaterialsUsage.From
+	result := ParsePermittedForFelling(strings.NewReader(html)).deadlineTransporting.From
 
 	expected := time.Date(2025, 1, 27, 0, 0, 0, 0, parser.GetLocation())
 
@@ -407,7 +407,7 @@ func TestShouldReturnDeadlineMaterialsUsageFrom(t *testing.T) {
 }
 
 func TestShouldReturnDeadlineMaterialsUsageTo(t *testing.T) {
-	result := ParsePermittedForFelling(strings.NewReader(html)).deadlineMaterialsUsage.To
+	result := ParsePermittedForFelling(strings.NewReader(html)).deadlineTransporting.To
 
 	expected := time.Date(2025, 12, 31, 0, 0, 0, 0, parser.GetLocation())
 
@@ -559,7 +559,7 @@ func TestShouldReturnExtensionLoggingTo(t *testing.T) {
 }
 
 func TestShouldReturnExtensionMaterialsUsageTo(t *testing.T) {
-	result := ParsePermittedForFelling(strings.NewReader(html)).extension.deadlineTransportingDeadlineTo
+	result := ParsePermittedForFelling(strings.NewReader(html)).extension.transportingDeadlineTo
 
 	expected := time.Date(2025, 2, 28, 0, 0, 0, 0, parser.GetLocation())
 
