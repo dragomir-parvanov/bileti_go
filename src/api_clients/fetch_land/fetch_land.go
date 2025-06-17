@@ -39,7 +39,7 @@ func FetchLand(baseUrl string, regionId int32, municipalityId int32) (io.Reader,
 	}
 
 	if resp.StatusCode != 200 {
-		return nil, fmt.Errorf("Request failed with status code %d", resp.StatusCode)
+		return nil, fmt.Errorf("request failed with status code %d", resp.StatusCode)
 	}
 
 	return resp.Body, nil

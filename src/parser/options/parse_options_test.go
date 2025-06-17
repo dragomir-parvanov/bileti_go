@@ -4,7 +4,6 @@ import (
 	"bileti_go/src/utils"
 	"bileti_go/src/utils/test"
 	"errors"
-	"fmt"
 	"reflect"
 	"strings"
 	"testing"
@@ -61,10 +60,10 @@ func TestShouldReturnOptions(t *testing.T) {
 }
 
 func TestShouldReturnErrorOnReaderError(t *testing.T) {
-	_, err := ParseOptions(&utils_test.ErrReader{Error: errors.New("reader error")})
+	val, err := ParseOptions(&utils_test.ErrReader{Error: errors.New("reader error")})
 
-	if err != nil {
-		fmt.Errorf("error should be defined")
+	if err == nil {
+		t.Errorf("error should be defined, instead received value %v", val)
 	}
 }
 

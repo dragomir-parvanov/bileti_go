@@ -33,7 +33,8 @@ func getZemlishteHandlerAssert(t *testing.T, expectedBody string) http.HandlerFu
 		}
 
 		w.WriteHeader(http.StatusOK)
-		w.Write([]byte("Ok Response"))
+
+		utils.Must(w.Write([]byte("Ok Response")))
 	}
 }
 
@@ -56,7 +57,7 @@ func TestShouldReturnTaskGetMunIfMunicipalityIdIsZero(t *testing.T) {
 	server := httptest.NewServer(getZemlishteHandlerAssert(t, "MunicipalityID=0&RegionID=0&Task=GetMun"))
 	defer server.Close()
 
-	FetchLand(server.URL, 0, 0)
+	_, _ = FetchLand(server.URL, 0, 0)
 
 }
 
@@ -65,7 +66,7 @@ func TestShouldReturnTaskGetPopIfMunicipalityIdIsNotZero(t *testing.T) {
 	server := httptest.NewServer(getZemlishteHandlerAssert(t, "MunicipalityID=1&RegionID=0&Task=GetPop"))
 	defer server.Close()
 
-	FetchLand(server.URL, 0, 1)
+	_, _ = FetchLand(server.URL, 0, 1)
 }
 
 func TestShouldReturnErrorWhenTheServerReturnsError(t *testing.T) {
