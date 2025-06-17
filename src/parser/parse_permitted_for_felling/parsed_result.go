@@ -15,6 +15,8 @@ type ParsedResult struct {
 	typeOfFelling               string
 	section                     string
 	subSection                  string
+	accordingToTheInventoryOf   string
+	inventoryOrderId            string
 	cadastreId                  string
 	municipality                string
 	land                        string
@@ -38,8 +40,6 @@ type ParsedResult struct {
 	issuedCode                  string
 	permitIssuePlace            PermitIssuePlace
 	extension                   Extension
-	accordingToTheInventoryOf   string
-	inventoryOrderId            string
 }
 
 type TreeExtraction struct {
