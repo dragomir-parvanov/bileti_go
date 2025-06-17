@@ -15,7 +15,7 @@ jobs:
         run: go get .
 
       - name: generate test coverage
-        run: go test ./... -coverprofile=./cover.out -covermode=atomic -coverpkg=./...
+        run: make coverage
 
       - name: check test coverage
         uses: vladopajic/go-test-coverage@v2
@@ -24,5 +24,3 @@ jobs:
           threshold-total: 90
           git-token: ${{ github.ref_name == 'main' && secrets.GITHUB_TOKEN || '' }}
           git-branch: badges
-
-# go tool cover -html=.test/c.out -o .test/test-coverage.html
