@@ -6,7 +6,7 @@ import (
 	"time"
 )
 
-func TestShouldReturnDeadlineToExtension(t *testing.T) {
+func TestShouldReturnTransportingDeadlineToExtension(t *testing.T) {
 	html := `
 	<table>
 		<tr>
@@ -28,7 +28,7 @@ func TestShouldReturnZeroTimeIfTransportingDeadlineToExtensionIsEmpty(t *testing
 	html := `
 	<table>
 		<tr>
-			<td align="left"> За провеждане на сечта до : ...................... г.</td>
+			<td align="left"> За провеждане на сечта до : 28.02.2025 г.</td>
 			<td align="left"> За извоз на материалите до : ...................... г.</td>
 		</tr>
 	</table>

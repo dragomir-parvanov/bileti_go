@@ -302,28 +302,10 @@ func extractPermissionIssuePlace(doc *goquery.Selection) PermitIssuePlace {
 func extractExtension(doc *goquery.Selection) Extension {
 
 	return Extension{
-		loggingDeadlineTo:      extractLoggingToExtension(doc),
+		loggingDeadlineTo:      parse_permitted_for_felling_fields.ExtractLoggingDeadlineToExtension(doc),
 		transportingDeadlineTo: parse_permitted_for_felling_fields.ExtractTransportingDeadlineToExtension(doc),
 		issuedBy:               extractIssuedByExtension(doc),
 	}
-}
-
-func extractLoggingToExtension(doc *goquery.Selection) time.Time {
-	line := doc.Find("td:contains('За провеждане на сечта до :')").First().Text()
-
-	cleanedLine := utils_string.CleanString(line)
-
-	if cleanedLine == "" {
-		return time.Time{}
-	}
-
-	regex := regexp.MustCompile("За провеждане на сечта до :(.*) г.")
-
-	match := regex.FindStringSubmatch(cleanedLine)[1]
-
-	result := utils.Must(time.ParseInLocation(parser.DateLayout, utils_string.CleanString(match), parser.GetLocation()))
-
-	return result
 }
 
 func extractIssuedByExtension(doc *goquery.Selection) string {
