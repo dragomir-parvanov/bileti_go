@@ -17,8 +17,12 @@ const (
 	Municipality taskRequestName = "GetMun"
 )
 
-func FetchLand(baseUrl string, regionId int32, municipalityId int32) (io.Reader, error) {
-	apiUrl := baseUrl + "/cgi-bin/GetZemlishte.cgi"
+type FetchLand struct {
+	baseUrl string
+}
+
+func (f FetchLand) Fetch(regionId int32, municipalityId int32) (io.Reader, error) {
+	apiUrl := f.baseUrl + "/cgi-bin/GetZemlishte.cgi"
 
 	form := url.Values{}
 

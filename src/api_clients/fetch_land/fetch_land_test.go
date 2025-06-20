@@ -43,7 +43,9 @@ func TestShouldReturnListOfLand(t *testing.T) {
 	server := httptest.NewServer(getZemlishteHandlerAssert(t, "MunicipalityID=0&RegionID=0&Task=GetMun"))
 	defer server.Close()
 
-	actual := string(utils.Must(io.ReadAll(utils.Must(FetchLand(server.URL, 0, 0)))))
+	f := FetchLand{baseUrl: server.URL}
+
+	actual := string(utils.Must(io.ReadAll(utils.Must(f.Fetch(0, 0)))))
 
 	expected := "Ok Response"
 
@@ -57,7 +59,7 @@ func TestShouldReturnTaskGetMunIfMunicipalityIdIsZero(t *testing.T) {
 	server := httptest.NewServer(getZemlishteHandlerAssert(t, "MunicipalityID=0&RegionID=0&Task=GetMun"))
 	defer server.Close()
 
-	_, _ = FetchLand(server.URL, 0, 0)
+	_, _ = FetchLand{baseUrl: server.URL}.Fetch(0, 0)
 
 }
 
@@ -66,13 +68,13 @@ func TestShouldReturnTaskGetPopIfMunicipalityIdIsNotZero(t *testing.T) {
 	server := httptest.NewServer(getZemlishteHandlerAssert(t, "MunicipalityID=1&RegionID=0&Task=GetPop"))
 	defer server.Close()
 
-	_, _ = FetchLand(server.URL, 0, 1)
+	_, _ = FetchLand{baseUrl: server.URL}.Fetch(0, 1)
 }
 
 func TestShouldReturnErrorWhenTheServerReturnsError(t *testing.T) {
 	notReachableUrl := `http://127.0.0.1:1`
 
-	res, err := FetchLand(notReachableUrl, 0, 0)
+	res, err := FetchLand{notReachableUrl}.Fetch(0, 0)
 
 	if err == nil {
 		resStr := string(utils.Must(io.ReadAll(res)))
@@ -88,7 +90,7 @@ func TestShouldReturnErrorWhenTheServerReturnsNonOkStatusCode(t *testing.T) {
 
 	defer server.Close()
 
-	res, err := FetchLand(server.URL, 0, 1)
+	res, err := FetchLand{baseUrl: server.URL}.Fetch(0, 0)
 
 	if err == nil {
 		resStr := string(utils.Must(io.ReadAll(res)))
