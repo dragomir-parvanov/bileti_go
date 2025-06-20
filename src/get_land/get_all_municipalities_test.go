@@ -59,8 +59,6 @@ func TestShouldReturnErrorOnFetchError(t *testing.T) {
 		return nil, expectedError
 	}}
 
-	getLand.GetAllMunicipalities([]int32{1, 2})
-
 	_, actual := getLand.GetAllMunicipalities([]int32{1})
 
 	if !errors.Is(actual, expectedError) {
