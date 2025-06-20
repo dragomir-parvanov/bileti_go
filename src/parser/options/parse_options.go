@@ -8,9 +8,7 @@ import (
 )
 
 func ParseOptions(reader io.Reader) ([]Option, error) {
-
 	doc, err := goquery.NewDocumentFromReader(reader)
-	print(doc)
 
 	if err != nil {
 		return nil, err
@@ -47,14 +45,14 @@ func extractOption(s *goquery.Selection) (Option, error) {
 	attr, exists := s.Attr("value")
 
 	if !exists {
-		return Option{}, errors.New("option attribute not found")
+		return Option{}, errors.New(`"value" attribute not found`)
 	}
 
 	intVal, err := strconv.ParseInt(attr, 10, 32)
 
 	option := Option{
-		label: s.Text(),
-		value: int32(intVal),
+		Label: s.Text(),
+		Value: int32(intVal),
 	}
 
 	return option, err
