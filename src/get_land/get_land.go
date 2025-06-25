@@ -8,7 +8,7 @@ import (
 type FetchLand func(regionId int, municipalityId int) (io.Reader, error)
 
 type GetLand struct {
-	fetchLand FetchLand
+	FetchLand FetchLand
 }
 
 type Land struct {
@@ -17,7 +17,7 @@ type Land struct {
 }
 
 func (g GetLand) Get(regionId int, municipalityId int) ([]Land, error) {
-	reader, err := g.fetchLand(regionId, municipalityId)
+	reader, err := g.FetchLand(regionId, municipalityId)
 
 	if err != nil {
 		return nil, err

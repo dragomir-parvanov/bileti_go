@@ -43,7 +43,7 @@ func TestShouldReturnListOfLand(t *testing.T) {
 	server := httptest.NewServer(getZemlishteHandlerAssert(t, "MunicipalityID=0&RegionID=0&Task=GetMun"))
 	defer server.Close()
 
-	f := FetchLand{baseUrl: server.URL}
+	f := FetchLand{BaseUrl: server.URL}
 
 	actual := string(utils.Must(io.ReadAll(utils.Must(f.Fetch(0, 0)))))
 
@@ -59,7 +59,7 @@ func TestShouldReturnTaskGetMunIfMunicipalityIdIsZero(t *testing.T) {
 	server := httptest.NewServer(getZemlishteHandlerAssert(t, "MunicipalityID=0&RegionID=0&Task=GetMun"))
 	defer server.Close()
 
-	_, _ = FetchLand{baseUrl: server.URL}.Fetch(0, 0)
+	_, _ = FetchLand{BaseUrl: server.URL}.Fetch(0, 0)
 
 }
 
@@ -68,7 +68,7 @@ func TestShouldReturnTaskGetPopIfMunicipalityIdIsNotZero(t *testing.T) {
 	server := httptest.NewServer(getZemlishteHandlerAssert(t, "MunicipalityID=1&RegionID=0&Task=GetPop"))
 	defer server.Close()
 
-	_, _ = FetchLand{baseUrl: server.URL}.Fetch(0, 1)
+	_, _ = FetchLand{BaseUrl: server.URL}.Fetch(0, 1)
 }
 
 func TestShouldReturnErrorWhenTheServerReturnsError(t *testing.T) {
@@ -90,7 +90,7 @@ func TestShouldReturnErrorWhenTheServerReturnsNonOkStatusCode(t *testing.T) {
 
 	defer server.Close()
 
-	res, err := FetchLand{baseUrl: server.URL}.Fetch(0, 0)
+	res, err := FetchLand{BaseUrl: server.URL}.Fetch(0, 0)
 
 	if err == nil {
 		resStr := string(utils.Must(io.ReadAll(res)))

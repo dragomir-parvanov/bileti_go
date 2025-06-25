@@ -47,7 +47,7 @@ func TestShouldReturnAllLandsIfOneLink(t *testing.T) {
 func TestShouldReturnErrorIfFetchingFails(t *testing.T) {
 	regionId := 1
 
-	getLand := GetLand{fetchLand: func(regionId int, municipalityId int) (io.Reader, error) {
+	getLand := GetLand{FetchLand: func(regionId int, municipalityId int) (io.Reader, error) {
 		return nil, errors.New("fetch error")
 	}}
 
@@ -61,7 +61,7 @@ func TestShouldReturnErrorIfFetchingFails(t *testing.T) {
 func TestShouldReturnErrorIfMunicipalitiesFetchSucceedButLandFails(t *testing.T) {
 	regionId := 1
 
-	getLand := GetLand{fetchLand: func(regionId int, municipalityId int) (io.Reader, error) {
+	getLand := GetLand{FetchLand: func(regionId int, municipalityId int) (io.Reader, error) {
 		if municipalityId != 0 {
 			return nil, errors.New("fetch error")
 

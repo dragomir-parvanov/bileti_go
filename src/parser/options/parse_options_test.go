@@ -92,3 +92,31 @@ func TestShouldReturnErrorOnOptionsWithNoValue(t *testing.T) {
 		t.Errorf("\nExpected: %s\nActual:   %s\n", expectedErrMessage, err.Error())
 	}
 }
+
+func TestShouldReturnWithoutSpaces(t *testing.T) {
+	html := `
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <title></title>
+        <link href="http://iag.bg/static/css/reset-min.css" rel="stylesheet" type="text/css"/>
+        <link href="http://iag.bg/static/css/style.css" rel="stylesheet" type="text/css"/>
+    </head>
+    <select id="PopulatedPlaceID" name="PopulatedPlaceID" class="textFiled">
+        <option value="0">
+        <<  >></option>Select * From regions.PopulatedPlaces where RegID = '12' and MunID = '111' Order by PolpulatedPlace		
+        <option value="2732"> Вършец</option>
+
+`
+
+	actual := utils.Must(ParseOptions(strings.NewReader(html)))
+
+	expected := []Option{
+		{Value: 2732, Label: "Вършец"},
+	}
+
+	if !reflect.DeepEqual(actual, expected) {
+		t.Errorf("\nExpected: %#v\nActual:   %#v", expected, actual)
+	}
+
+}

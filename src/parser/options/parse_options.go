@@ -1,6 +1,7 @@
 package options_parser
 
 import (
+	utils_string "bileti_go/src/utils/string"
 	"errors"
 	"github.com/PuerkitoBio/goquery"
 	"io"
@@ -51,7 +52,7 @@ func extractOption(s *goquery.Selection) (Option, error) {
 	intVal, err := strconv.ParseInt(attr, 10, 64)
 
 	option := Option{
-		Label: s.Text(),
+		Label: utils_string.RemoveBadSpaces(s.Text()),
 		Value: int(intVal),
 	}
 

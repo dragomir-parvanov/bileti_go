@@ -23,7 +23,7 @@ func makeTestFetchLandForMunicipalities(municipalitiesLength int) FetchLand {
 }
 
 func TestShouldReturnAllMunicipalities(t *testing.T) {
-	getLand := GetLand{fetchLand: makeTestFetchLandForMunicipalities(2)}
+	getLand := GetLand{FetchLand: makeTestFetchLandForMunicipalities(2)}
 
 	actual := utils.Must(getLand.GetAllMunicipalities([]int{1, 2}))
 
@@ -41,7 +41,7 @@ func TestShouldReturnAllMunicipalities(t *testing.T) {
 
 func TestShouldReturnErrorOnFetchError(t *testing.T) {
 	expectedError := errors.New("fetch error")
-	getLand := GetLand{fetchLand: func(regionId int, municipalityId int) (io.Reader, error) {
+	getLand := GetLand{FetchLand: func(regionId int, municipalityId int) (io.Reader, error) {
 		return nil, expectedError
 	}}
 

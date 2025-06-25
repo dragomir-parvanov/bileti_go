@@ -18,17 +18,17 @@ const (
 )
 
 type FetchLand struct {
-	baseUrl string
+	BaseUrl string
 }
 
-func (f FetchLand) Fetch(regionId int32, municipalityId int32) (io.Reader, error) {
-	apiUrl := f.baseUrl + "/cgi-bin/GetZemlishte.cgi"
+func (f FetchLand) Fetch(regionId int, municipalityId int) (io.Reader, error) {
+	apiUrl := f.BaseUrl + "/cgi-bin/GetZemlishte.cgi"
 
 	form := url.Values{}
 
 	form.Add("Task", string(getTask(municipalityId)))
-	form.Add("MunicipalityID", strconv.Itoa(int(municipalityId)))
-	form.Add("RegionID", strconv.Itoa(int(regionId)))
+	form.Add("MunicipalityID", strconv.Itoa(municipalityId))
+	form.Add("RegionID", strconv.Itoa(regionId))
 
 	body := strings.NewReader(form.Encode())
 
@@ -49,7 +49,7 @@ func (f FetchLand) Fetch(regionId int32, municipalityId int32) (io.Reader, error
 	return resp.Body, nil
 }
 
-func getTask(municipalityId int32) taskRequestName {
+func getTask(municipalityId int) taskRequestName {
 	if municipalityId > 0 {
 		return Population
 	}
