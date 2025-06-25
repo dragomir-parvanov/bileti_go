@@ -5,18 +5,18 @@ import (
 	"io"
 )
 
-type FetchLand func(regionId int32, municipalityId int32) (io.Reader, error)
+type FetchLand func(regionId int, municipalityId int) (io.Reader, error)
 
 type GetLand struct {
 	fetchLand FetchLand
 }
 
 type Land struct {
-	id   int32
+	id   int
 	name string
 }
 
-func (g GetLand) Get(regionId int32, municipalityId int32) ([]Land, error) {
+func (g GetLand) Get(regionId int, municipalityId int) ([]Land, error) {
 	reader, err := g.fetchLand(regionId, municipalityId)
 
 	if err != nil {

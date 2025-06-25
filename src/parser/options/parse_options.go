@@ -48,11 +48,11 @@ func extractOption(s *goquery.Selection) (Option, error) {
 		return Option{}, errors.New(`"value" attribute not found`)
 	}
 
-	intVal, err := strconv.ParseInt(attr, 10, 32)
+	intVal, err := strconv.ParseInt(attr, 10, 64)
 
 	option := Option{
 		Label: s.Text(),
-		Value: int32(intVal),
+		Value: int(intVal),
 	}
 
 	return option, err

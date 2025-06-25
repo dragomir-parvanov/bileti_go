@@ -3,43 +3,29 @@ package get_land
 import (
 	"bileti_go/src/utils"
 	"errors"
-	"fmt"
 	"io"
 	"reflect"
-	"strings"
 	"testing"
 )
 
-func makeTestFetchLand(municipalitiesLength int32) FetchLand {
-	idCounter := int32(1)
-	return func(regionId int32, municipalityId int32) (io.Reader, error) {
-		html := `
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-        <title></title>
-        <link href="http://iag.bg/static/css/reset-min.css" rel="stylesheet" type="text/css"/>
-        <link href="http://iag.bg/static/css/style.css" rel="stylesheet" type="text/css"/>
-    </head>
-    <select id="MunicipalityID" name="MunicipalityID" class="textFiled" onchange="ajax_get_pop()">
-        <option value="0">
-        <<  >></option>
-`
+func makeTestFetchLandForMunicipalities(municipalitiesLength int) FetchLand {
+	idCounter := 1
 
-		for i := int32(0); i < municipalitiesLength; i++ {
-			id := idCounter
+	return func(regionId int, municipalityId int) (io.Reader, error) {
+		var ids []int
+		for i := 0; i < municipalitiesLength; i++ {
+			ids = append(ids, idCounter)
 			idCounter++
-			html = html + `\n` + fmt.Sprintf(`<option value="%v">%v</option>`, id, id)
 		}
 
-		return strings.NewReader(html), nil
+		return makeTestFetchLandForIds(ids)(regionId, municipalityId)
 	}
 }
 
 func TestShouldReturnAllMunicipalities(t *testing.T) {
-	getLand := GetLand{fetchLand: makeTestFetchLand(2)}
+	getLand := GetLand{fetchLand: makeTestFetchLandForMunicipalities(2)}
 
-	actual := utils.Must(getLand.GetAllMunicipalities([]int32{1, 2}))
+	actual := utils.Must(getLand.GetAllMunicipalities([]int{1, 2}))
 
 	expected := []LandRegionPair{
 		{RegionId: 1, Land: Land{id: 1, name: "1"}},
@@ -55,11 +41,11 @@ func TestShouldReturnAllMunicipalities(t *testing.T) {
 
 func TestShouldReturnErrorOnFetchError(t *testing.T) {
 	expectedError := errors.New("fetch error")
-	getLand := GetLand{fetchLand: func(regionId int32, municipalityId int32) (io.Reader, error) {
+	getLand := GetLand{fetchLand: func(regionId int, municipalityId int) (io.Reader, error) {
 		return nil, expectedError
 	}}
 
-	_, actual := getLand.GetAllMunicipalities([]int32{1})
+	_, actual := getLand.GetAllMunicipalities([]int{1})
 
 	if !errors.Is(actual, expectedError) {
 		t.Errorf(`Expected %v, received %v`, expectedError, actual)

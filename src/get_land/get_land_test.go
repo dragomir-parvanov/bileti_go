@@ -26,7 +26,7 @@ func TestShouldReturnLand(t *testing.T) {
         '.
 `
 
-	getLand := GetLand{fetchLand: func(regionId int32, municipalityId int32) (io.Reader, error) {
+	getLand := GetLand{fetchLand: func(regionId int, municipalityId int) (io.Reader, error) {
 		return strings.NewReader(html), nil
 	}}
 
@@ -42,7 +42,7 @@ func TestShouldReturnLand(t *testing.T) {
 func TestShouldReturnErrorOnFetchLandErr(t *testing.T) {
 	fetchLandError := errors.New("fetchLand error")
 
-	getLand := GetLand{fetchLand: func(regionId int32, municipalityId int32) (io.Reader, error) {
+	getLand := GetLand{fetchLand: func(regionId int, municipalityId int) (io.Reader, error) {
 		return nil, fetchLandError
 	}}
 
@@ -72,7 +72,7 @@ func TestShouldReturnErrorOnParsingErr(t *testing.T) {
         '.
 `
 
-	getLand := GetLand{fetchLand: func(regionId int32, municipalityId int32) (io.Reader, error) {
+	getLand := GetLand{fetchLand: func(regionId int, municipalityId int) (io.Reader, error) {
 		return strings.NewReader(html), nil
 	}}
 

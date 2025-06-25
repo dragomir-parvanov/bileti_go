@@ -3,11 +3,11 @@ package get_land
 import "errors"
 
 type LandRegionPair struct {
-	RegionId int32
+	RegionId int
 	Land     Land
 }
 
-func (g GetLand) GetAllMunicipalities(regions []int32) ([]LandRegionPair, error) {
+func (g GetLand) GetAllMunicipalities(regions []int) ([]LandRegionPair, error) {
 	var pairs []LandRegionPair
 	var errs []error
 
@@ -26,7 +26,7 @@ func (g GetLand) GetAllMunicipalities(regions []int32) ([]LandRegionPair, error)
 	return pairs, errors.Join(errs...)
 }
 
-func makePairs(regionId int32, land []Land) []LandRegionPair {
+func makePairs(regionId int, land []Land) []LandRegionPair {
 	pairs := make([]LandRegionPair, len(land))
 
 	for i, land := range land {

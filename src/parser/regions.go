@@ -1,6 +1,6 @@
 package parser
 
-type Region int32
+type Region int
 
 /*
 Where the value is the id corresponding in the iag website
